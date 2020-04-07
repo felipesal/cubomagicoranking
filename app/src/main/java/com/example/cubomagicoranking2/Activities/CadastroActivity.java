@@ -22,6 +22,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -84,11 +87,27 @@ public class CadastroActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
                                         Log.i("INFO_DB" , "Usuário cadastrado com sucesso");
-                                        Toast.makeText(CadastroActivity.this,"Usuário cadastrado com sucesso", LENGTH_SHORT).show();
+                                        mostrarToast("Usuário cadastrado com sucesso");
                                     }
                                     else{
-                                        Log.i("INFO_DB" , "Erro ao cadastrar usuário");
-                                        Toast.makeText(CadastroActivity.this , "Erro ao cadastrar usuário", LENGTH_SHORT).show();
+                                        try{
+                                            throw task.getException();
+                                        }
+                                        catch (FirebaseAuthWeakPasswordException e){
+                                            mostrarToast("Senha fraca");
+                                        }
+                                        catch(FirebaseAuthInvalidCredentialsException e){
+                                            mostrarToast("Digite um e-mail válido");
+                                        }
+                                        catch(FirebaseAuthUserCollisionException e){
+                                            mostrarToast("E-mail já cadastrado");
+                                        }
+                                        catch(Exception e) {
+
+                                            Log.i("INFO_DB", "Erro ao cadastrar usuário");
+                                            mostrarToast("Erro ao cadastrar usuário");
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
                             });
@@ -98,5 +117,9 @@ public class CadastroActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void mostrarToast(String msg){
+        Toast.makeText(CadastroActivity.this, msg, LENGTH_SHORT).show();
     }
 }

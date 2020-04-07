@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "75679158408",
+    "firebase_url": "https://cubomagicoranking.firebaseio.com",
+    "project_id": "cubomagicoranking",
+    "storage_bucket": "cubomagicoranking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75679158408:android:f772d9bfd735472cf08f3d",
+        "android_client_info": {
+          "package_name": "com.example.cubomagicoranking2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75679158408-ckkk0r5m07phb885hibqsop7gbk4iadn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cubomagicoranking2",
+            "certificate_hash": "973f37da27265d2c5a64db9756de36f8d2b596b0"
+          }
+        },
+        {
+          "client_id": "75679158408-kbhlf333p7u6s8oadr2pcaequ0m0v51g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn32It4iaYoU-1kc2dWLzGxlicBYDdE1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75679158408-kbhlf333p7u6s8oadr2pcaequ0m0v51g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

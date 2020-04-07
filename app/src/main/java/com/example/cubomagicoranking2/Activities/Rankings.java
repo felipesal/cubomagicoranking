@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.example.cubomagicoranking2.Fragments.MediaDosCentraisFragment;
 import com.example.cubomagicoranking2.Fragments.MelhorDeTresFragment;
@@ -32,8 +33,6 @@ public class Rankings extends AppCompatActivity {
 
         getSupportActionBar().setElevation(0);
 
-        String usuario = dados.getString("usuario");
-        String senha = dados.getString("senha");
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
@@ -47,4 +46,11 @@ public class Rankings extends AppCompatActivity {
         smartTabLayout.setViewPager(viewPager);
 
     }
-}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_pag_principal, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    }
+

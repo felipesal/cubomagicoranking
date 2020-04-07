@@ -111,7 +111,7 @@ public class CadastroActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-
+                        finish();
                     break;
                 }
         }

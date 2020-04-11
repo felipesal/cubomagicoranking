@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         email = findViewById(R.id.textEmail);
-       senha = findViewById(R.id.textSenha);
+        senha = findViewById(R.id.textSenha);
+
 
 
         textViewCadastro = findViewById(R.id.textViewCadastro);
@@ -80,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+    }
+
+    @Override
+    protected void onStart() {
+        verificarUsuarioLogado();
+        super.onStart();
     }
 
     public void mostrarToast(String msg){
@@ -120,6 +127,14 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, Rankings.class);
             startActivity(intent);
             finish();
+        }
+
+        public void verificarUsuarioLogado(){
+            autenticacao= AuthConfig.getFirebaseAutenticacao();
+
+            if(autenticacao.getCurrentUser() != null){
+                abrirTelaDeRanking();
+            }
         }
     }
 

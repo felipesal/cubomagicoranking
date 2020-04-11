@@ -1,17 +1,19 @@
 package com.example.cubomagicoranking2.Domain;
 
+import com.example.cubomagicoranking2.config.FirebaseConfig;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
 public class Jogador {
+
+    private String idUsuario;
+
+
 
     private String nome;
     private String email;
 
     private String senha;
-
-    private JogoSimples jogoSimples;
-
-    private MelhorDeTres jogoMelhor;
-
-    private MediaDosCentrais jogoMedia;
 
     public Jogador() {
     }
@@ -32,6 +34,7 @@ public class Jogador {
         this.email = email;
     }
 
+    @Exclude
     public String getSenha() {
         return senha;
     }
@@ -40,27 +43,20 @@ public class Jogador {
         this.senha = senha;
     }
 
-    public JogoSimples getJogoSimples() {
-        return jogoSimples;
+    @Exclude
+    public String getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setJogoSimples(JogoSimples jogoSimples) {
-        this.jogoSimples = jogoSimples;
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public MelhorDeTres getJogoMelhor() {
-        return jogoMelhor;
+    public void salvarJogador() {
+        DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
+        firebase.child("usuarios")
+                .child(this.idUsuario)
+                .setValue(this);
     }
 
-    public void setJogoMelhor(MelhorDeTres jogoMelhor) {
-        this.jogoMelhor = jogoMelhor;
-    }
-
-    public MediaDosCentrais getJogoMedia() {
-        return jogoMedia;
-    }
-
-    public void setJogoMedia(MediaDosCentrais jogoMedia) {
-        this.jogoMedia = jogoMedia;
-    }
 }

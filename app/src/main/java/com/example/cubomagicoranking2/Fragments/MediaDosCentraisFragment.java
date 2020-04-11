@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.cubomagicoranking2.Activities.AdicionarTempoMediaActivity;
 import com.example.cubomagicoranking2.Activities.AdicionarTempoMelhorActivity;
 import com.example.cubomagicoranking2.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -43,7 +44,7 @@ public class MediaDosCentraisFragment extends Fragment {
         fabMedia.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AdicionarTempoMelhorActivity.class);
+                Intent intent = new Intent(getActivity(), AdicionarTempoMediaActivity.class);
                 startActivity(intent);
             }
         });

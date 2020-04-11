@@ -1,5 +1,11 @@
 package com.example.cubomagicoranking2.Domain;
 
+import com.example.cubomagicoranking2.Helper.Base64Custom;
+import com.example.cubomagicoranking2.config.AuthConfig;
+import com.example.cubomagicoranking2.config.FirebaseConfig;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,5 +76,39 @@ public class MelhorDeTres implements Jogos {
         tempoBonito.setSegundos(segundos);
 
         return tempoBonito.ofSeconds();
+    }
+
+    @Override
+    public void salvar() {
+        DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
+        FirebaseAuth autenticacao = AuthConfig.getFirebaseAutenticacao();
+        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
+        firebase.child("melhordetres")
+                .child(idUsuario)
+                .child("descricao")
+                .child("tempos")
+                .child("tempo1")
+                .setValue(tempo1.toString());
+
+        firebase.child("melhordetres")
+                .child(idUsuario)
+                .child("descricao")
+                .child("tempos")
+                .child("tempo2")
+                .setValue(tempo2.toString());
+
+        firebase.child("melhordetres")
+                .child(idUsuario)
+                .child("descricao")
+                .child("tempos")
+                .child("tempo3")
+                .setValue(tempo3.toString());
+
+        firebase.child("melhordetres")
+                .child(idUsuario)
+                .child("descricao")
+                .child("resultadoemsegundos")
+                .setValue(resultadoEmSegundos());
+
     }
 }

@@ -13,9 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cubomagicoranking2.Domain.Jogador;
+import com.example.cubomagicoranking2.Helper.Base64Custom;
 import com.example.cubomagicoranking2.Helper.JogadorDAO;
 import com.example.cubomagicoranking2.R;
 import com.example.cubomagicoranking2.config.AuthConfig;
+import com.example.cubomagicoranking2.config.FirebaseConfig;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -41,7 +43,11 @@ public class CadastroActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao = FirebaseAuth.getInstance();
 
+    private FirebaseConfig firebaseConfig;
 
+    private DatabaseReference databaseReference;
+
+    Jogador jogador = new Jogador();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +73,7 @@ public class CadastroActivity extends AppCompatActivity {
         String textSenhaString = textSenha.getText().toString();
         String textEmailString = textEmail.getText().toString();
 
-        Jogador jogador = new Jogador();
+
         jogador.setEmail(textEmailString);
         jogador.setNome(textNomeString);
         jogador.setSenha(textSenhaString);
@@ -86,8 +92,13 @@ public class CadastroActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        Log.i("INFO_DB" , "Usuário cadastrado com sucesso");
-                                        mostrarToast("Usuário cadastrado com sucesso");
+                                        String idUsuario = Base64Custom.codificarBase64(jogador.getEmail());
+                                        jogador.setIdUsuario(idUsuario);
+                                        jogador.salvarJogador();
+
+
+
+
                                     }
                                     else{
                                         try{

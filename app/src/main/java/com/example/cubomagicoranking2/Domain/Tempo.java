@@ -43,7 +43,19 @@ public class Tempo {
     }
 
     public String toString() {
-        return minutos + ":" + segundos;
+        if(String.valueOf(segundos).length() == 1 && String.valueOf(minutos).length() == 1) {
+            return "0" + minutos + ":0" + segundos;
+        }
+        if(String.valueOf(minutos).length() == 1 && String.valueOf(segundos).length() == 2 ){
+            return "0"+minutos + ":" + segundos;
+        }
+        if(String.valueOf(minutos).length() == 2 && String.valueOf(segundos).length() == 1){
+            return minutos + ":0" + segundos;
+        }
+        else{
+            return minutos + ":" + segundos;
+        }
+
     }
 
 

@@ -6,4 +6,6 @@ public interface Jogos {
 
     public String resultadoEmMinutos();
 
+    public void salvar();
+
 }

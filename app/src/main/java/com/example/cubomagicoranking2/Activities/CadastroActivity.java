@@ -92,8 +92,6 @@ public class CadastroActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        String idUsuario = Base64Custom.codificarBase64(jogador.getEmail());
-                                        jogador.setIdUsuario(idUsuario);
                                         jogador.salvarJogador();
 
 

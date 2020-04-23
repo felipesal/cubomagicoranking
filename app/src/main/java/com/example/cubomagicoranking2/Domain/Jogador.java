@@ -6,16 +6,22 @@ import com.google.firebase.database.Exclude;
 
 public class Jogador {
 
-    private String idUsuario;
-
-
-
-    private String nome;
+    private String id;
     private String email;
-
+    private String nome;
     private String senha;
 
+
+
     public Jogador() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -43,20 +49,15 @@ public class Jogador {
         this.senha = senha;
     }
 
-    @Exclude
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     public void salvarJogador() {
         DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
-        firebase.child("usuarios")
-                .child(this.idUsuario)
-                .setValue(this);
+        DatabaseReference usuariosPath = firebase.child("usuarios");
+
+        usuariosPath.push().setValue(this);
+
+        this.setId(usuariosPath.getKey());
+
     }
 
 }

@@ -11,36 +11,95 @@ import java.util.List;
 
 public class MelhorDeTres implements Jogos {
 
-    private Tempo tempo1, tempo2, tempo3;
+    private Jogador jogador;
 
-    public MelhorDeTres(Tempo tempo1, Tempo tempo2, Tempo tempo3) {
-        this.tempo1 = tempo1;
-        this.tempo2 = tempo2;
-        this.tempo3 = tempo3;
+    private int tempo1Seg, tempo2Seg, tempo3Seg, tempoFinalSeg;
+
+    private String tempo1Str, tempo2Str, tempo3Str, tempoFinalStr;
+
+
+    public MelhorDeTres(Jogador jogador, Tempo tempo1, Tempo tempo2, Tempo tempo3) {
+        this.jogador = jogador;
+        this.tempo1Seg = tempo1.toSeconds();
+        this.tempo1Str = tempo1.toString();
+        this.tempo2Seg = tempo2.toSeconds();
+        this.tempo2Str = tempo3.toString();
+        this.tempo3Seg = tempo3.toSeconds();
+        this.tempo3Str = tempo3.toString();
+        resultadoEmSegundos();
+        resultadoEmMinutos();
+        }
+
+    public Jogador getJogador() {
+        return jogador;
     }
 
-    public Tempo getTempo1() {
-        return tempo1;
+    public void setJogador(Jogador jogador) {
+        this.jogador = jogador;
     }
 
-    public void setTempo1(Tempo tempo1) {
-        this.tempo1 = tempo1;
+    public int getTempo1Seg() {
+        return tempo1Seg;
     }
 
-    public Tempo getTempo2() {
-        return tempo2;
+    public void setTempo1Seg(int tempo1Seg) {
+        this.tempo1Seg = tempo1Seg;
     }
 
-    public void setTempo2(Tempo tempo2) {
-        this.tempo2 = tempo2;
+    public int getTempo2Seg() {
+        return tempo2Seg;
     }
 
-    public Tempo getTempo3() {
-        return tempo3;
+    public void setTempo2Seg(int tempo2Seg) {
+        this.tempo2Seg = tempo2Seg;
     }
 
-    public void setTempo3(Tempo tempo3) {
-        this.tempo3 = tempo3;
+    public int getTempo3Seg() {
+        return tempo3Seg;
+    }
+
+    public void setTempo3Seg(int tempo3Seg) {
+        this.tempo3Seg = tempo3Seg;
+    }
+
+    public String getTempo1Str() {
+        return tempo1Str;
+    }
+
+    public void setTempo1Str(String tempo1Str) {
+        this.tempo1Str = tempo1Str;
+    }
+
+    public String getTempo2Str() {
+        return tempo2Str;
+    }
+
+    public void setTempo2Str(String tempo2Str) {
+        this.tempo2Str = tempo2Str;
+    }
+
+    public String getTempo3Str() {
+        return tempo3Str;
+    }
+
+    public void setTempo3Str(String tempo3Str) {
+        this.tempo3Str = tempo3Str;
+    }
+
+    public int getTempoFinalSeg() {
+        return tempoFinalSeg;
+    }
+
+    public void setTempoFinalSeg(int tempoFinalSeg) {
+        this.tempoFinalSeg = tempoFinalSeg;
+    }
+
+    public String getTempoFinalStr() {
+        return tempoFinalStr;
+    }
+
+    public void setTempoFinalStr(String tempoFinalStr) {
+        this.tempoFinalStr = tempoFinalStr;
     }
 
     @Override
@@ -48,67 +107,45 @@ public class MelhorDeTres implements Jogos {
 
         List<Integer> temposEmSegundos = new ArrayList<>();
 
-        temposEmSegundos.add(tempo1.toSeconds());
-        temposEmSegundos.add(tempo2.toSeconds());
-        temposEmSegundos.add(tempo3.toSeconds());
+        temposEmSegundos.add(tempo1Seg);
+        temposEmSegundos.add(tempo2Seg);
+        temposEmSegundos.add(tempo3Seg);
 
-        Integer menorTempo = 1000000000;
+        tempoFinalSeg = 1000000000;
 
         for(int i=0; i< temposEmSegundos.size(); i++) {
 
             Integer tempoEmSegundoRef = temposEmSegundos.get(i);
 
-            if(tempoEmSegundoRef < menorTempo) {
-                menorTempo = tempoEmSegundoRef;
+            if(tempoEmSegundoRef < tempoFinalSeg) {
+                tempoFinalSeg = tempoEmSegundoRef;
             }
 
         }
 
-        return menorTempo;
+        return tempoFinalSeg;
     }
 
 
-    @Override
+
     public String resultadoEmMinutos() {
-        Integer segundos = resultadoEmSegundos();
 
         Tempo tempoBonito = new Tempo();
-        tempoBonito.setSegundos(segundos);
+        tempoBonito.setSegundos(tempoFinalSeg);
 
-        return tempoBonito.ofSeconds();
+        tempoFinalStr = tempoBonito.ofSeconds();
+
+        return tempoFinalStr;
+
     }
 
     @Override
     public void salvar() {
         DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
-        FirebaseAuth autenticacao = AuthConfig.getFirebaseAutenticacao();
-        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
-        firebase.child("melhordetres")
-                .child(idUsuario)
-                .child("descricao")
-                .child("tempos")
-                .child("tempo1")
-                .setValue(tempo1.toString());
+        firebase.child("tempomelhordetres")
+                .push()
+                .setValue(this);
 
-        firebase.child("melhordetres")
-                .child(idUsuario)
-                .child("descricao")
-                .child("tempos")
-                .child("tempo2")
-                .setValue(tempo2.toString());
-
-        firebase.child("melhordetres")
-                .child(idUsuario)
-                .child("descricao")
-                .child("tempos")
-                .child("tempo3")
-                .setValue(tempo3.toString());
-
-        firebase.child("melhordetres")
-                .child(idUsuario)
-                .child("descricao")
-                .child("resultadoemsegundos")
-                .setValue(resultadoEmSegundos());
 
     }
 }

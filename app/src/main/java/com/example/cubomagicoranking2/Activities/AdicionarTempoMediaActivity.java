@@ -4,14 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cubomagicoranking2.Domain.Jogador;
 import com.example.cubomagicoranking2.Domain.MediaDosCentrais;
 import com.example.cubomagicoranking2.Domain.Tempo;
+import com.example.cubomagicoranking2.Helper.Base64Custom;
 import com.example.cubomagicoranking2.R;
+import com.example.cubomagicoranking2.config.AuthConfig;
+import com.example.cubomagicoranking2.config.FirebaseConfig;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -23,10 +33,28 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
 
     private MediaDosCentrais mediaDosCentrais;
 
+    private Jogador jogador = new Jogador();
+
+
+    DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
+    FirebaseAuth autenticacao = AuthConfig.getFirebaseAutenticacao();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_tempo_media);
+
+        Bundle bundle = getIntent().getExtras();
+        String nome = bundle.getString("nome");
+        String email = bundle.getString("email");
+        String id = bundle.getString("id");
+
+        jogador.setId(id);
+        jogador.setNome(nome);
+        jogador.setEmail(email);
+
+        Log.i("Dado jogador", jogador.getId()+", "+ jogador.getNome() + ", " + jogador.getEmail()+ ".");
+
 
         minutos1 = findViewById(R.id.editTextMin1);
         minutos2 = findViewById(R.id.editTextMin2);
@@ -41,9 +69,7 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
         segundos5 = findViewById(R.id.editTextSeg5);
 
 
-
-
-    }
+         }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -101,7 +127,7 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
                 tempo5.setSegundos(seg5Int);
                 tempo5.setMinutos(min5Int);
 
-                mediaDosCentrais = new MediaDosCentrais(tempo1, tempo2, tempo3, tempo4, tempo5);
+                mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
 
                 try{
                     mediaDosCentrais.salvar();
@@ -123,4 +149,6 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
     public void mostrarToast(String msg){
         Toast.makeText(AdicionarTempoMediaActivity.this, msg, LENGTH_SHORT).show();
     }
+
+
 }

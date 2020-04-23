@@ -4,14 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cubomagicoranking2.Domain.Jogador;
 import com.example.cubomagicoranking2.Domain.MelhorDeTres;
 import com.example.cubomagicoranking2.Domain.Tempo;
+import com.example.cubomagicoranking2.Helper.Base64Custom;
 import com.example.cubomagicoranking2.R;
+import com.example.cubomagicoranking2.config.AuthConfig;
+import com.example.cubomagicoranking2.config.FirebaseConfig;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -23,12 +33,28 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
 
     private MelhorDeTres melhorDeTres;
 
+    private Jogador jogador = new Jogador();
 
+
+    DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
+    FirebaseAuth autenticacao = AuthConfig.getFirebaseAutenticacao();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_tempo_melhor);
+
+        Bundle bundle = getIntent().getExtras();
+        String nome = bundle.getString("nome");
+        String email = bundle.getString("email");
+        String id = bundle.getString("id");
+
+        jogador.setId(id);
+        jogador.setNome(nome);
+        jogador.setEmail(email);
+
+        Log.i("Dado jogador", jogador.getId()+", "+ jogador.getNome() + ", " + jogador.getEmail()+ ".");
+
 
         minuto1 = findViewById(R.id.editTextMinuto1);
         minuto2 = findViewById(R.id.editTextMinuto2);
@@ -37,6 +63,7 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
         segundo1 = findViewById(R.id.editTextSegundo1);
         segundo2 = findViewById(R.id.editTextSegundo2);
         segundo3 = findViewById(R.id.editTextSegundo3);
+
 
 
 
@@ -80,7 +107,7 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
                 tempo3.setMinutos(min3Int);
                 tempo3.setSegundos(seg3Int);
 
-                melhorDeTres = new MelhorDeTres(tempo1, tempo2, tempo3);
+                melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
                 try {
                     melhorDeTres.salvar();
                     mostrarToast("Tempo salvo com sucesso");
@@ -99,4 +126,6 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
     public void mostrarToast(String msg){
         Toast.makeText(AdicionarTempoMelhorActivity.this, msg, LENGTH_SHORT).show();
     }
+
+
 }

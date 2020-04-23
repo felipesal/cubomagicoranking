@@ -8,65 +8,147 @@ import com.google.firebase.database.DatabaseReference;
 
 public class MediaDosCentrais implements Jogos {
 
-    private Tempo tempo1, tempo2, tempo3, tempo4, tempo5;
+    private int tempo1Seg, tempo2Seg, tempo3Seg, tempo4Seg, tempo5Seg;
 
-    public MediaDosCentrais(Tempo tempo1, Tempo tempo2, Tempo tempo3, Tempo tempo4, Tempo tempo5) {
+    private String tempo1Str, tempo2Str, tempo3Str, tempo4Str, tempo5Str;
+
+    private Jogador jogador;
+
+    private String resultadoStr;
+
+    private int resultadoSeg;
+
+    public MediaDosCentrais(Jogador jogador, Tempo tempo1, Tempo tempo2, Tempo tempo3, Tempo tempo4, Tempo tempo5) {
         super();
-        this.tempo1 = tempo1;
-        this.tempo2 = tempo2;
-        this.tempo3 = tempo3;
-        this.tempo4 = tempo4;
-        this.tempo5 = tempo5;
+        this.jogador = jogador;
+        this.tempo1Seg = tempo1.toSeconds();
+        this.tempo1Str = tempo1.toString();
+        this.tempo2Seg = tempo2.toSeconds();
+        this.tempo2Str = tempo2.toString();
+        this.tempo3Seg = tempo3.toSeconds();
+        this.tempo3Str = tempo3.toString();
+        this.tempo4Seg = tempo4.toSeconds();
+        this.tempo4Str = tempo4.toString();
+        this.tempo5Seg = tempo5.toSeconds();
+        this.tempo5Str = tempo5.toString();
+
+        resultadoEmSegundos();
+        resultadoEmMinutos();
     }
 
-    public Tempo getTempo1() {
-        return tempo1;
+    public int getTempo1Seg() {
+        return tempo1Seg;
     }
 
-    public void setTempo1(Tempo tempo1) {
-        this.tempo1 = tempo1;
+    public void setTempo1Seg(int tempo1Seg) {
+        this.tempo1Seg = tempo1Seg;
     }
 
-    public Tempo getTempo2() {
-        return tempo2;
+    public int getTempo2Seg() {
+        return tempo2Seg;
     }
 
-    public void setTempo2(Tempo tempo2) {
-        this.tempo2 = tempo2;
+    public void setTempo2Seg(int tempo2Seg) {
+        this.tempo2Seg = tempo2Seg;
     }
 
-    public Tempo getTempo3() {
-        return tempo3;
+    public int getTempo3Seg() {
+        return tempo3Seg;
     }
 
-    public void setTempo3(Tempo tempo3) {
-        this.tempo3 = tempo3;
+    public void setTempo3Seg(int tempo3Seg) {
+        this.tempo3Seg = tempo3Seg;
     }
 
-    public Tempo getTempo4() {
-        return tempo4;
+    public int getTempo4Seg() {
+        return tempo4Seg;
     }
 
-    public void setTempo4(Tempo tempo4) {
-        this.tempo4 = tempo4;
+    public void setTempo4Seg(int tempo4Seg) {
+        this.tempo4Seg = tempo4Seg;
     }
 
-    public Tempo getTempo5() {
-        return tempo5;
+    public int getTempo5Seg() {
+        return tempo5Seg;
     }
 
-    public void setTempo5(Tempo tempo5) {
-        this.tempo5 = tempo5;
+    public void setTempo5Seg(int tempo5Seg) {
+        this.tempo5Seg = tempo5Seg;
     }
+
+    public String getTempo1Str() {
+        return tempo1Str;
+    }
+
+    public void setTempo1Str(String tempo1Str) {
+        this.tempo1Str = tempo1Str;
+    }
+
+    public String getTempo2Str() {
+        return tempo2Str;
+    }
+
+    public void setTempo2Str(String tempo2Str) {
+        this.tempo2Str = tempo2Str;
+    }
+
+    public String getTempo3Str() {
+        return tempo3Str;
+    }
+
+    public void setTempo3Str(String tempo3Str) {
+        this.tempo3Str = tempo3Str;
+    }
+
+    public String getTempo4Str() {
+        return tempo4Str;
+    }
+
+    public void setTempo4Str(String tempo4Str) {
+        this.tempo4Str = tempo4Str;
+    }
+
+    public String getTempo5Str() {
+        return tempo5Str;
+    }
+
+    public void setTempo5Str(String tempo5Str) {
+        this.tempo5Str = tempo5Str;
+    }
+
+    public Jogador getJogador() {
+        return jogador;
+    }
+
+    public void setJogador(Jogador jogador) {
+        this.jogador = jogador;
+    }
+
+    public String getResultadoStr() {
+        return resultadoStr;
+    }
+
+    public void setResultadoStr(String resultadoStr) {
+        this.resultadoStr = resultadoStr;
+    }
+
+    public int getResultadoSeg() {
+        return resultadoSeg;
+    }
+
+    public void setResultadoSeg(int resultadoSeg) {
+        this.resultadoSeg = resultadoSeg;
+    }
+
     @Override
     public Integer resultadoEmSegundos() {
         Integer[] temposEmSegundos = new Integer[5];
 
-        temposEmSegundos[0] = tempo1.toSeconds();
-        temposEmSegundos[1] = tempo2.toSeconds();
-        temposEmSegundos[2] = tempo3.toSeconds();
-        temposEmSegundos[3] = tempo4.toSeconds();
-        temposEmSegundos[4] = tempo5.toSeconds();
+        temposEmSegundos[0] = tempo1Seg;
+        temposEmSegundos[1] = tempo2Seg;
+        temposEmSegundos[2] = tempo3Seg;
+        temposEmSegundos[3] = tempo4Seg;
+        temposEmSegundos[4] = tempo5Seg;
 
         int menorValor = 10000000;
         int maiorValor = 0;
@@ -95,63 +177,30 @@ public class MediaDosCentrais implements Jogos {
             soma += temposEmSegundos[i];
         }
 
-        return soma/3;
+        resultadoSeg = soma/3;
+
+        return resultadoSeg;
     }
 
-    @Override
+
     public String resultadoEmMinutos() {
-        int segundosFinais = resultadoEmSegundos();
 
         Tempo tempoEmMinutos = new Tempo();
-        tempoEmMinutos.setSegundos(segundosFinais);
+        tempoEmMinutos.setSegundos(resultadoSeg);
 
-        return tempoEmMinutos.ofSeconds();
+        resultadoStr = tempoEmMinutos.ofSeconds();
+        return resultadoStr;
     }
 
     @Override
     public void salvar() {
         DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
-        FirebaseAuth autenticacao = AuthConfig.getFirebaseAutenticacao();
-        String idUsuario = Base64Custom.codificarBase64(autenticacao.getCurrentUser().getEmail());
-        firebase.child("mediadoscentrais")
-                .child(idUsuario)
-                .child("descricao")
-                .child("tempos")
-                .child("tempo1")
-                .setValue(tempo1.toString());
 
-        firebase.child("mediadoscentrais")
-                .child(idUsuario)
-                .child("descricao")
-                .child("tempos")
-                .child("tempo2")
-                .setValue(tempo2.toString());
 
-        firebase.child("mediadoscentrais")
-                .child(idUsuario)
-                .child("descricao")
-                .child("tempos")
-                .child("tempo3")
-                .setValue(tempo3.toString());
+        firebase.child("tempomediadoscentrais")
+                .push()
+                .setValue(this);
 
-        firebase.child("mediadoscentrais")
-                .child(idUsuario)
-                .child("descricao")
-                .child("tempos")
-                .child("tempo4")
-                .setValue(tempo4.toString());
 
-        firebase.child("mediadoscentrais")
-                .child(idUsuario)
-                .child("descricao")
-                .child("tempos")
-                .child("tempo5")
-                .setValue(tempo5.toString());
-
-        firebase.child("mediadoscentrais")
-                .child(idUsuario)
-                .child("descricao")
-                .child("resultadoemsegundos")
-                .setValue(resultadoEmSegundos());
     }
 }

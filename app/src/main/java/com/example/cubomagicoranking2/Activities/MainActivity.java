@@ -126,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
         public void abrirTelaDeRanking(){
             Intent intent = new Intent(this, Rankings.class);
             startActivity(intent);
-            finish();
         }
 
         public void verificarUsuarioLogado(){

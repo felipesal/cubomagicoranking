@@ -4,7 +4,7 @@ public interface Jogos {
 
     public Integer resultadoEmSegundos();
 
-    public String resultadoEmMinutos();
+//    public String resultadoEmMinutos();
 
     public void salvar();
 

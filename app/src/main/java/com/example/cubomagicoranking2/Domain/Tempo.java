@@ -9,6 +9,11 @@ public class Tempo {
     public Tempo() {
     }
 
+    public Tempo(int minutos, int segundos) {
+        this.minutos = minutos;
+        this.segundos = segundos;
+    }
+
     public Integer getMinutos() {
         return minutos;
     }

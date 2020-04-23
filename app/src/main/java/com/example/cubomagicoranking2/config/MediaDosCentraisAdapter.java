@@ -10,18 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cubomagicoranking2.Domain.JogoSimples;
+import com.example.cubomagicoranking2.Domain.MediaDosCentrais;
 import com.example.cubomagicoranking2.R;
 
 import java.util.List;
 
-public class SimplesAdapter extends RecyclerView.Adapter<SimplesAdapter.MyViewHolder> {
+public class MediaDosCentraisAdapter extends RecyclerView.Adapter<MediaDosCentraisAdapter.MyViewHolder> {
 
-    private List<JogoSimples> listaJogoSimples;
+    private List<MediaDosCentrais> listaMediaDosCentrais;
 
     private Context context;
 
-    public SimplesAdapter(List<JogoSimples> listaJogoSimples, Context context) {
-        this.listaJogoSimples = listaJogoSimples;
+    public MediaDosCentraisAdapter(List<MediaDosCentrais> listaMediaDosCentrais, Context context) {
+        this.listaMediaDosCentrais = listaMediaDosCentrais;
         this.context = context;
     }
 
@@ -30,23 +31,23 @@ public class SimplesAdapter extends RecyclerView.Adapter<SimplesAdapter.MyViewHo
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemLista = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.lista_jogosimples_adapter , parent, false);
+                        .inflate(R.layout.list_mediadoscentrais , parent, false);
 
         return new MyViewHolder(itemLista);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        JogoSimples jogoSimples = listaJogoSimples.get(position);
+        MediaDosCentrais mdc = listaMediaDosCentrais.get(position);
 
         holder.posicao.setText(String.valueOf(position+1));
-        holder.nome.setText((jogoSimples.getJogador()).getNome());
-        holder.tempo.setText((jogoSimples.getTempoStr()));
+        holder.nome.setText((mdc.getJogador()).getNome());
+        holder.tempo.setText(mdc.getResultadoStr());
     }
 
     @Override
     public int getItemCount() {
-        return listaJogoSimples.size();
+        return listaMediaDosCentrais.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -57,9 +58,9 @@ public class SimplesAdapter extends RecyclerView.Adapter<SimplesAdapter.MyViewHo
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            posicao = itemView.findViewById(R.id.textPosicao);
-            nome = itemView.findViewById(R.id.textNome);
-            tempo = itemView.findViewById(R.id.textTempo);
+            posicao = itemView.findViewById(R.id.textViewPosicaoMedia);
+            nome = itemView.findViewById(R.id.textViewNomeMedia);
+            tempo = itemView.findViewById(R.id.textViewTempoMedia);
         }
     }
 

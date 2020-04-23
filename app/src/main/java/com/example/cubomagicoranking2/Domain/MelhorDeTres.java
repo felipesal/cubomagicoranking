@@ -17,6 +17,8 @@ public class MelhorDeTres implements Jogos {
 
     private String tempo1Str, tempo2Str, tempo3Str, tempoFinalStr;
 
+    public MelhorDeTres() {
+    }
 
     public MelhorDeTres(Jogador jogador, Tempo tempo1, Tempo tempo2, Tempo tempo3) {
         this.jogador = jogador;

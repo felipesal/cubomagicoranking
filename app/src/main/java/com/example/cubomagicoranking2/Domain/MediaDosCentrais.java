@@ -18,6 +18,9 @@ public class MediaDosCentrais implements Jogos {
 
     private int resultadoSeg;
 
+    public MediaDosCentrais() {
+    }
+
     public MediaDosCentrais(Jogador jogador, Tempo tempo1, Tempo tempo2, Tempo tempo3, Tempo tempo4, Tempo tempo5) {
         super();
         this.jogador = jogador;

@@ -9,44 +9,43 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cubomagicoranking2.Domain.JogoSimples;
+import com.example.cubomagicoranking2.Domain.MelhorDeTres;
 import com.example.cubomagicoranking2.R;
 
 import java.util.List;
 
-public class SimplesAdapter extends RecyclerView.Adapter<SimplesAdapter.MyViewHolder> {
+public class MelhorDeTresAdapter extends RecyclerView.Adapter<MelhorDeTresAdapter.MyViewHolder>{
 
-    private List<JogoSimples> listaJogoSimples;
+    private List<MelhorDeTres> listaMelhorDeTres;
 
     private Context context;
 
-    public SimplesAdapter(List<JogoSimples> listaJogoSimples, Context context) {
-        this.listaJogoSimples = listaJogoSimples;
+    public MelhorDeTresAdapter(List<MelhorDeTres> listaJogoSimples, Context context) {
+        this.listaMelhorDeTres = listaJogoSimples;
         this.context = context;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View itemLista = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.lista_jogosimples_adapter , parent, false);
+                .inflate(R.layout.list_melhordetres , parent, false);
 
         return new MyViewHolder(itemLista);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        JogoSimples jogoSimples = listaJogoSimples.get(position);
+        MelhorDeTres mdt = listaMelhorDeTres.get(position);
 
         holder.posicao.setText(String.valueOf(position+1));
-        holder.nome.setText((jogoSimples.getJogador()).getNome());
-        holder.tempo.setText((jogoSimples.getTempoStr()));
+        holder.nome.setText(mdt.getJogador().getNome());
+        holder.tempo.setText(mdt.getTempoFinalStr());
     }
 
     @Override
     public int getItemCount() {
-        return listaJogoSimples.size();
+        return listaMelhorDeTres.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -57,9 +56,9 @@ public class SimplesAdapter extends RecyclerView.Adapter<SimplesAdapter.MyViewHo
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            posicao = itemView.findViewById(R.id.textPosicao);
-            nome = itemView.findViewById(R.id.textNome);
-            tempo = itemView.findViewById(R.id.textTempo);
+            posicao = itemView.findViewById(R.id.textViewPosicaoMedia);
+            nome = itemView.findViewById(R.id.textViewNomeMedia);
+            tempo = itemView.findViewById(R.id.textViewTempoMedia);
         }
     }
 

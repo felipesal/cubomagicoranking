@@ -163,9 +163,9 @@ public class SimplesFragment extends Fragment {
     public void recuperarJogosSimples(){
         tempoSimplesRef = firebase.child("temposimples");
 
+        Query pesq = tempoSimplesRef.orderByChild("tempoSeg");
 
-
-        valueEventListenerJogoSimples = tempoSimplesRef.addValueEventListener(new ValueEventListener() {
+        valueEventListenerJogoSimples = pesq.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 jogos.clear();

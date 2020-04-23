@@ -152,7 +152,9 @@ public class MediaDosCentraisFragment extends Fragment {
     public void carregarMediaDosCentrais(){
         mdcRef = firebase.child("tempomediadoscentrais");
 
-        valueEventListenerMediaDosCentrais = mdcRef.addValueEventListener(new ValueEventListener() {
+        Query pesq = mdcRef.orderByChild("resultadoSeg");
+
+        valueEventListenerMediaDosCentrais = pesq.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 jogos.clear();

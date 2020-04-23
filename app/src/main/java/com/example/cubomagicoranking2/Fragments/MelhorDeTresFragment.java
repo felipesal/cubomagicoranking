@@ -149,7 +149,9 @@ public class MelhorDeTresFragment extends Fragment {
     public void recuperarJogosMelhorDeTres(){
         mdtRef = firebase.child("tempomelhordetres");
 
-        valueEventListenerMelhorDeTres = mdtRef.addValueEventListener(new ValueEventListener() {
+        Query pesq = mdtRef.orderByChild("tempoFinalSeg");
+
+        valueEventListenerMelhorDeTres = pesq.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 jogos.clear();

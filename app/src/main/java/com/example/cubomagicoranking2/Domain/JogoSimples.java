@@ -1,5 +1,6 @@
 package com.example.cubomagicoranking2.Domain;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,16 +17,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class JogoSimples implements Jogos {
 
     DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
+    DatabaseReference tempoSimples = firebase.child("temposimples");
     FirebaseAuth autenticacao = AuthConfig.getFirebaseAutenticacao();
+    JogoSimples js;
+
+    private String id;
 
     private Jogador jogador;
 
     private int tempoSeg;
 
     private String tempoStr;
+
+
 
     public JogoSimples() {
     }
@@ -34,6 +44,14 @@ public class JogoSimples implements Jogos {
         this.jogador = jogador;
         this.tempoSeg = tempo.toSeconds();
         this.tempoStr = tempo.toString();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Jogador getJogador() {
@@ -79,9 +97,11 @@ public class JogoSimples implements Jogos {
                     .setValue(this);
     }
 
+    @Override
+    public void atualizar() {
+        tempoSimples.child(id).setValue(this);
 
-
-
+    }
 
 
 }

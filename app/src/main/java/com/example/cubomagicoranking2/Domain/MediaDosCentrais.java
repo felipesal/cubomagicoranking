@@ -1,12 +1,28 @@
 package com.example.cubomagicoranking2.Domain;
 
+import android.provider.MediaStore;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import com.example.cubomagicoranking2.Helper.Base64Custom;
 import com.example.cubomagicoranking2.config.AuthConfig;
 import com.example.cubomagicoranking2.config.FirebaseConfig;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MediaDosCentrais implements Jogos {
+
+    @Exclude
+    private String id;
 
     private int tempo1Seg, tempo2Seg, tempo3Seg, tempo4Seg, tempo5Seg;
 
@@ -17,6 +33,12 @@ public class MediaDosCentrais implements Jogos {
     private String resultadoStr;
 
     private int resultadoSeg;
+
+    DatabaseReference firebase =  FirebaseConfig.getFirebaseDatabase();
+
+    DatabaseReference tempoMediaDosCentrais = firebase.child("tempomediadoscentrais");
+
+    MediaDosCentrais mdc;
 
     public MediaDosCentrais() {
     }
@@ -37,6 +59,14 @@ public class MediaDosCentrais implements Jogos {
 
         resultadoEmSegundos();
         resultadoEmMinutos();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getTempo1Seg() {
@@ -197,13 +227,40 @@ public class MediaDosCentrais implements Jogos {
 
     @Override
     public void salvar() {
-        DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
 
 
-        firebase.child("tempomediadoscentrais")
-                .push()
-                .setValue(this);
+        tempoMediaDosCentrais.push().setValue(this);
 
 
+    }
+
+    public MediaDosCentrais recuperar(){
+        mdc = new MediaDosCentrais();
+
+        Query pesq = tempoMediaDosCentrais.child("jogador").orderByChild("email").equalTo(jogador.getEmail());
+
+        pesq.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    mdc = dataSnapshot.getValue(MediaDosCentrais.class);
+                }
+                else{
+                    Log.i("MediaDosCentrais", "Não recuperou nada");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return mdc;
+    }
+    @Override
+    public void atualizar(){
+
+        tempoMediaDosCentrais.child(id).setValue(this);
     }
 }

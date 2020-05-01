@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.cubomagicoranking2.Activities.AdicionarTempoSimplesActivity;
 import com.example.cubomagicoranking2.Domain.Jogador;
 import com.example.cubomagicoranking2.Domain.JogoSimples;
+import com.example.cubomagicoranking2.Domain.MelhorDeTres;
 import com.example.cubomagicoranking2.Domain.Tempo;
 import com.example.cubomagicoranking2.Helper.Base64Custom;
 import com.example.cubomagicoranking2.R;
@@ -66,6 +67,8 @@ public class SimplesFragment extends Fragment {
 
     private ValueEventListener valueEventListenerJogoSimples;
 
+    private boolean referencia;
+
     private View view;
 
     @Override
@@ -88,16 +91,18 @@ public class SimplesFragment extends Fragment {
         this.recuperarJogador();
 
         fabSimples = view.findViewById(R.id.floatingActionButtonSimples);
-        fabSimples.setOnClickListener(new View.OnClickListener(){
+        fabSimples.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                consultarJogador();
                 Intent intent = new Intent(getActivity(), AdicionarTempoSimplesActivity.class);
                 intent.putExtra("nome", jogador.getNome());
                 intent.putExtra("email", jogador.getEmail());
                 intent.putExtra("id", jogador.getId());
+                intent.putExtra("referencia", referencia);
                 startActivity(intent);
 
-                Log.i("Dados simples fragment", jogador.getId()+", "+ jogador.getNome() + ", " + jogador.getEmail()+ ".");
+                Log.i("Dados simples fragment", jogador.getId() + ", " + jogador.getNome() + ", " + jogador.getEmail() + ".");
             }
         });
 
@@ -123,13 +128,13 @@ public class SimplesFragment extends Fragment {
         super.onStop();
     }
 
-    public void recuperarJogador(){
+    public void recuperarJogador() {
         Query ref = firebase.child("usuarios").orderByChild("email").equalTo(autenticacao.getCurrentUser().getEmail());
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dados : dataSnapshot.getChildren()){
+                for (DataSnapshot dados : dataSnapshot.getChildren()) {
                     jogador = dados.getValue(Jogador.class);
                     jogador.setId(dados.getKey());
                     Log.i("Dados jogador", jogador.getNome());
@@ -147,20 +152,20 @@ public class SimplesFragment extends Fragment {
 
     }
 
-    public void carregarRecyclerView(View view){
+    public void carregarRecyclerView(View view) {
 
         this.recuperarJogosSimples();
 
         adapterSimples = new SimplesAdapter(jogos, getActivity());
 
         recyclerView = view.findViewById(R.id.recyclerViewSimples);
-        RecyclerView.LayoutManager layoutManager =new LinearLayoutManager(getActivity());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapterSimples);
     }
 
-    public void recuperarJogosSimples(){
+    public void recuperarJogosSimples() {
         tempoSimplesRef = firebase.child("temposimples");
 
         Query pesq = tempoSimplesRef.orderByChild("tempoSeg");
@@ -170,13 +175,14 @@ public class SimplesFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 jogos.clear();
 
-                for(DataSnapshot dados : dataSnapshot.getChildren()){
+                for (DataSnapshot dados : dataSnapshot.getChildren()) {
                     JogoSimples jogoSimples = dados.getValue(JogoSimples.class);
+                    jogoSimples.setId(dados.getKey());
                     jogos.add(jogoSimples);
 
                 }
 
-                 adapterSimples.notifyDataSetChanged();
+                adapterSimples.notifyDataSetChanged();
             }
 
             @Override
@@ -184,6 +190,20 @@ public class SimplesFragment extends Fragment {
 
             }
         });
+    }
+
+    public boolean consultarJogador() {
+
+        for (JogoSimples simples : jogos) {
+            if (simples.getJogador().getEmail().equals(jogador.getEmail())) {
+                referencia = true;
+                break;
+            } else {
+                referencia = false;
+            }
+        }
+        return referencia;
+
     }
 
 }

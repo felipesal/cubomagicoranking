@@ -55,6 +55,8 @@ public class MelhorDeTresFragment extends Fragment {
 
     private ValueEventListener valueEventListenerMelhorDeTres;
 
+    private boolean referencia = false;
+
     View view;
 
     @Override
@@ -78,10 +80,12 @@ public class MelhorDeTresFragment extends Fragment {
         fabMelhorDeTres.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                consultarJogador();
                 Intent intent = new Intent(getActivity(), AdicionarTempoMelhorActivity.class);
                 intent.putExtra("nome", jogador.getNome());
                 intent.putExtra("email", jogador.getEmail());
                 intent.putExtra("id", jogador.getId());
+                intent.putExtra("referencia", referencia);
                 Log.i("Dados melhor fragment", jogador.getId()+", "+ jogador.getNome() + ", " + jogador.getEmail()+ ".");
                 startActivity(intent);
 
@@ -171,5 +175,18 @@ public class MelhorDeTresFragment extends Fragment {
         });
     }
 
+    public boolean consultarJogador(){
+
+        for(MelhorDeTres mdt: jogos){
+            if (mdt.getJogador().getEmail().equals(jogador.getEmail())){
+                referencia = true;
+                break;
+            }
+            else{
+                referencia = false;
+            }
+        }
+        return referencia;
+    }
 
 }

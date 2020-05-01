@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.cubomagicoranking2.Domain.Jogador;
 import com.example.cubomagicoranking2.Domain.MediaDosCentrais;
+import com.example.cubomagicoranking2.Domain.MelhorDeTres;
 import com.example.cubomagicoranking2.Domain.Tempo;
 import com.example.cubomagicoranking2.Helper.Base64Custom;
 import com.example.cubomagicoranking2.R;
@@ -21,7 +22,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -31,13 +36,23 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
 
     private Tempo tempo1, tempo2, tempo3, tempo4, tempo5;
 
-    private MediaDosCentrais mediaDosCentrais;
+    private MediaDosCentrais mediaDosCentrais, mediaDosCentraisRecuperado;
 
     private Jogador jogador = new Jogador();
 
+    private Jogador jogadorRecuperado = new Jogador();
+
+    DatabaseReference jogadorRef;
+
+    private boolean referencia = true;
+
+    private List<MediaDosCentrais> jogos = new ArrayList<>();
+
 
     DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
+    DatabaseReference tempoMediaDosCentrais = firebase.child("tempomediadoscentrais");
     FirebaseAuth autenticacao = AuthConfig.getFirebaseAutenticacao();
+    ValueEventListener valueEventListenerRecuperarJogador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +63,10 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
         String nome = bundle.getString("nome");
         String email = bundle.getString("email");
         String id = bundle.getString("id");
+        referencia = bundle.getBoolean("referencia");
+
+        Log.i("Dado referência", String.valueOf(referencia));
+
 
         jogador.setId(id);
         jogador.setNome(nome);
@@ -68,8 +87,20 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
         segundos4 = findViewById(R.id.editTextSeg4);
         segundos5 = findViewById(R.id.editTextSeg5);
 
+        recuperar();
+
 
          }
+
+
+
+
+
+    @Override
+    protected void onStart() {
+        //recuperarJogador();
+        super.onStart();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,9 +161,20 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
                 mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
 
                 try{
-                    mediaDosCentrais.salvar();
-                    mostrarToast("Tempo salvo com sucesso");
-                    finish();
+                    if(jogos.size() == 0) {
+                        mediaDosCentrais.salvar();
+                        mostrarToast("Tempo salvo com sucesso");
+                        finish();
+                    }
+                    else{
+                        for (int i = 0; i<jogos.size(); i++){
+                            String id = jogos.get(i).getId();
+                            mediaDosCentrais.setId(id);
+                        }
+                        mediaDosCentrais.atualizar();
+                        mostrarToast("Tempo atualizado");
+                        finish();
+                    }
                 }
                 catch(Exception e){
                     mostrarToast("Erro ao salvar tempo");
@@ -148,6 +190,61 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
 
     public void mostrarToast(String msg){
         Toast.makeText(AdicionarTempoMediaActivity.this, msg, LENGTH_SHORT).show();
+    }
+
+    private void recuperar() {
+        Query pesqTempoMediaDosCentrais = tempoMediaDosCentrais.orderByChild("/jogador/email").equalTo(jogador.getEmail());
+
+        pesqTempoMediaDosCentrais.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+
+                    mediaDosCentraisRecuperado = new MediaDosCentrais();
+
+                    for(DataSnapshot dados: dataSnapshot.getChildren()) {
+                        mediaDosCentraisRecuperado = dados.getValue(MediaDosCentrais.class);
+                        mediaDosCentraisRecuperado.setId(dados.getKey());
+                        jogos.add(mediaDosCentraisRecuperado);
+                        Log.i("Nuh", dados.toString());
+
+                    }
+                    for(int i= 0; i<jogos.size(); i++){
+                        Log.i("Nuh2", jogos.get(i).getJogador().getNome());
+                    }
+
+                }
+                else{
+                    Log.i("JogoSimples", "Não recuperou nada");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    public void recuperarJogador(){
+        jogadorRef = firebase.child("tempomediadoscentrais").child("jogador");
+
+        Query pesq = firebase.orderByChild("email").equalTo(autenticacao.getCurrentUser().getEmail());
+
+        pesq.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                jogadorRecuperado = dataSnapshot.getValue(Jogador.class);
+                Log.i("Dados", jogadorRecuperado.getNome());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 

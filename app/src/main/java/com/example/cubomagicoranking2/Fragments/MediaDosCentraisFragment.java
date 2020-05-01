@@ -19,6 +19,7 @@ import com.example.cubomagicoranking2.Activities.AdicionarTempoMediaActivity;
 import com.example.cubomagicoranking2.Activities.AdicionarTempoMelhorActivity;
 import com.example.cubomagicoranking2.Domain.Jogador;
 import com.example.cubomagicoranking2.Domain.MediaDosCentrais;
+import com.example.cubomagicoranking2.Domain.MelhorDeTres;
 import com.example.cubomagicoranking2.Domain.Tempo;
 import com.example.cubomagicoranking2.R;
 import com.example.cubomagicoranking2.config.AuthConfig;
@@ -46,7 +47,7 @@ public class MediaDosCentraisFragment extends Fragment {
 
     private Jogador jogador = new Jogador();
     private DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
-    private DatabaseReference mdcRef;
+    private DatabaseReference mdcRef = firebase.child("tempomediadoscentrais");
     private ValueEventListener valueEventListenerMediaDosCentrais;
     private FirebaseAuth autenticacao= AuthConfig.getFirebaseAutenticacao();
 
@@ -55,6 +56,8 @@ public class MediaDosCentraisFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private MediaDosCentraisAdapter adapter;
+
+    private boolean referencia = true;
 
     View view;
 
@@ -81,23 +84,34 @@ public class MediaDosCentraisFragment extends Fragment {
         fabMedia.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getActivity(), AdicionarTempoMediaActivity.class);
                 intent.putExtra("nome", jogador.getNome());
                 intent.putExtra("email", jogador.getEmail());
                 intent.putExtra("id", jogador.getId());
+
+                intent.putExtra("referencia", referencia);
+                Log.i("Dado referencia saida", String.valueOf(referencia));
+
                 Log.i("Dados media fragment", jogador.getId()+", "+ jogador.getNome() + ", " + jogador.getEmail()+ ".");
                 startActivity(intent);
             }
         });
+
+
         return view;
     }
 
     @Override
     public void onStart() {
-
-       carregarRecyclerView(view);
-
+        carregarRecyclerView(view);
         super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
     }
 
     @Override
@@ -108,29 +122,6 @@ public class MediaDosCentraisFragment extends Fragment {
         super.onStop();
     }
 
-    public void recuperarJogador(){
-        Query ref = firebase.child("usuarios").orderByChild("email").equalTo(autenticacao.getCurrentUser().getEmail());
-
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot dados : dataSnapshot.getChildren()){
-                    jogador = dados.getValue(Jogador.class);
-                    jogador.setId(dados.getKey());
-                    Log.i("Dados jogador", jogador.getNome());
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
 
     public void carregarRecyclerView(View view){
         carregarMediaDosCentrais();
@@ -150,6 +141,8 @@ public class MediaDosCentraisFragment extends Fragment {
     }
 
     public void carregarMediaDosCentrais(){
+
+
         mdcRef = firebase.child("tempomediadoscentrais");
 
         Query pesq = mdcRef.orderByChild("resultadoSeg");
@@ -175,6 +168,28 @@ public class MediaDosCentraisFragment extends Fragment {
             }
         });
     }
+    public void recuperarJogador(){
+        Query ref = firebase.child("usuarios").orderByChild("email").equalTo(autenticacao.getCurrentUser().getEmail());
 
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dados : dataSnapshot.getChildren()){
+                    jogador = dados.getValue(Jogador.class);
+                    jogador.setId(dados.getKey());
+                    Log.i("Dados jogador", jogador.getNome());
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
 
 }

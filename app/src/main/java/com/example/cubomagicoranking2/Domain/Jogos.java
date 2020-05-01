@@ -8,4 +8,6 @@ public interface Jogos {
 
     public void salvar();
 
+    public void atualizar();
+
 }

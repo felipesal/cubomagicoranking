@@ -1,21 +1,30 @@
 package com.example.cubomagicoranking2.Domain;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.example.cubomagicoranking2.Helper.Base64Custom;
 import com.example.cubomagicoranking2.config.AuthConfig;
 import com.example.cubomagicoranking2.config.FirebaseConfig;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MelhorDeTres implements Jogos {
 
+    @Exclude
+    private String id;
+
     private Jogador jogador;
 
     private int tempo1Seg, tempo2Seg, tempo3Seg, tempoFinalSeg;
 
     private String tempo1Str, tempo2Str, tempo3Str, tempoFinalStr;
+
+
 
     public MelhorDeTres() {
     }
@@ -31,6 +40,14 @@ public class MelhorDeTres implements Jogos {
         resultadoEmSegundos();
         resultadoEmMinutos();
         }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Jogador getJogador() {
         return jogador;
@@ -150,4 +167,12 @@ public class MelhorDeTres implements Jogos {
 
 
     }
+
+    @Override
+    public void atualizar() {
+        DatabaseReference tempoMelhorDeTres = FirebaseConfig.getFirebaseDatabase().child("tempomelhordetres");
+        tempoMelhorDeTres.child(id).setValue(this);
+    }
+
+
 }

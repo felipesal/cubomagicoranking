@@ -25,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class AdicionarTempoSimplesActivity extends AppCompatActivity {
@@ -33,7 +36,7 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
 
     private Tempo tempo;
 
-    private JogoSimples jogoSimples;
+    private JogoSimples jogoSimples, jogoSimplesRecuperado;
 
     private int segundosInt, minutosInt;
 
@@ -41,9 +44,14 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
 
    private Jogador jogador = new Jogador();
 
+   private boolean referencia = true;
+
+   List<JogoSimples> jogos = new ArrayList<>();
+
 
     DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
     FirebaseAuth autenticacao = AuthConfig.getFirebaseAutenticacao();
+    DatabaseReference tempoSimples = firebase.child("temposimples");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,7 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
         String nome = bundle.getString("nome");
         String email = bundle.getString("email");
         String id = bundle.getString("id");
+        referencia = bundle.getBoolean("referencia");
 
         jogador.setId(id);
         jogador.setNome(nome);
@@ -63,8 +72,8 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
 
         minutos = findViewById(R.id.editTextMinutos);
         segundos = findViewById(R.id.editTextSegundos);
-     //   this.recuperarJogador();
-     //   Log.i("Dados jogador", jogador.getNome());
+        recuperar();
+
 
     }
 
@@ -90,12 +99,26 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
                 tempo.setMinutos(minutosInt);
                 tempo.setSegundos(segundosInt);
 
-                jogoSimples = new JogoSimples(tempo ,jogador);
+                jogoSimples = new JogoSimples(tempo , jogador);
+
+
+
 
                 try {
-                    jogoSimples.salvar();
-                    mostrarToast("Tempo salvo com sucesso");
-                    finish();
+                    if(jogos.size() == 0) {
+                        jogoSimples.salvar();
+                        mostrarToast("Tempo salvo com sucesso");
+                        finish();
+                    }
+                    else {
+                        for (int i = 0; i<jogos.size(); i++){
+                            String id = jogos.get(i).getId();
+                            jogoSimples.setId(id);
+                        }
+                        jogoSimples.atualizar();
+                        mostrarToast("Tempo atualizado");
+                        finish();
+                    }
                 }
                 catch(Exception e){
                     mostrarToast("Erro ao salvar tempo");
@@ -111,14 +134,44 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
         Toast.makeText(AdicionarTempoSimplesActivity.this, msg, LENGTH_SHORT).show();
     }
 
+    public void recuperar(){
 
+        Query pesqTempoSimples = tempoSimples.orderByChild("/jogador/email").equalTo(jogador.getEmail());
 
-   /* public static Jogador get(DataSnapshot snapshot) {
-        Jogador usuario = new Jogador();
-        usuario.setIdUsuario((String) snapshot.child(Base64Custom.codificarBase64()).getValue());
-        usuario.setFirstName((String) snapshot.child("firstName").getValue());
-        usuario.setLastName((String) snapshot.child("lastName").getValue());
-        return usuario;
+        pesqTempoSimples.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+
+                    jogoSimplesRecuperado = new JogoSimples();
+
+                    for(DataSnapshot dados: dataSnapshot.getChildren()) {
+                        jogoSimplesRecuperado = dados.getValue(JogoSimples.class);
+                        jogoSimplesRecuperado.setId(dados.getKey());
+                        jogos.add(jogoSimplesRecuperado);
+                        Log.i("Nuh", dados.toString());
+
+                    }
+                    for(int i= 0; i<jogos.size(); i++){
+                        Log.i("Nuh2", jogos.get(i).getJogador().getNome());
+                    }
+
+                }
+                else{
+                    Log.i("JogoSimples", "Não recuperou nada");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
-*/
+
+
+
+
 }

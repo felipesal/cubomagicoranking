@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.cubomagicoranking2.Domain.Jogador;
+import com.example.cubomagicoranking2.Domain.JogoSimples;
+import com.example.cubomagicoranking2.Domain.MediaDosCentrais;
 import com.example.cubomagicoranking2.Domain.MelhorDeTres;
 import com.example.cubomagicoranking2.Domain.Tempo;
 import com.example.cubomagicoranking2.Helper.Base64Custom;
@@ -21,7 +23,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -31,13 +37,18 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
 
     private Tempo tempo1, tempo2, tempo3;
 
-    private MelhorDeTres melhorDeTres;
+    private MelhorDeTres melhorDeTres, melhorDeTresRecuperado;
 
     private Jogador jogador = new Jogador();
+
+    private boolean referencia = true;
+
+    private List<MelhorDeTres> jogos = new ArrayList<>();
 
 
     DatabaseReference firebase = FirebaseConfig.getFirebaseDatabase();
     FirebaseAuth autenticacao = AuthConfig.getFirebaseAutenticacao();
+    DatabaseReference tempoMelhorDeTres = firebase.child("tempomelhordetres");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,8 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
         String nome = bundle.getString("nome");
         String email = bundle.getString("email");
         String id = bundle.getString("id");
+        referencia = bundle.getBoolean("referencia");
+
 
         jogador.setId(id);
         jogador.setNome(nome);
@@ -64,6 +77,7 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
         segundo2 = findViewById(R.id.editTextSegundo2);
         segundo3 = findViewById(R.id.editTextSegundo3);
 
+        recuperar();
 
 
 
@@ -109,9 +123,20 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
 
                 melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
                 try {
-                    melhorDeTres.salvar();
-                    mostrarToast("Tempo salvo com sucesso");
-                    finish();
+                    if(jogos.size()==0) {
+                        melhorDeTres.salvar();
+                        mostrarToast("Tempo salvo com sucesso");
+                        finish();
+                    }
+                    else {
+                        for (int i = 0; i<jogos.size(); i++){
+                            String id = jogos.get(i).getId();
+                            melhorDeTres.setId(id);
+                        }
+                        melhorDeTres.atualizar();
+                        mostrarToast("Tempo atualizado");
+                        finish();
+                    }
                 }
                 catch(Exception e){
                     mostrarToast("Erro ao salvar tempo");
@@ -123,9 +148,48 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void recuperar(){
+
+        Query pesqTempoSimples = tempoMelhorDeTres.orderByChild("/jogador/email").equalTo(jogador.getEmail());
+
+        pesqTempoSimples.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+
+                    melhorDeTresRecuperado = new MelhorDeTres();
+
+                    for(DataSnapshot dados: dataSnapshot.getChildren()) {
+                        melhorDeTresRecuperado = dados.getValue(MelhorDeTres.class);
+                        melhorDeTresRecuperado.setId(dados.getKey());
+                        jogos.add(melhorDeTresRecuperado);
+                        Log.i("Nuh", dados.toString());
+
+                    }
+                    for(int i= 0; i<jogos.size(); i++){
+                        Log.i("Nuh2", jogos.get(i).getJogador().getNome());
+                    }
+
+                }
+                else{
+                    Log.i("JogoSimples", "Não recuperou nada");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     public void mostrarToast(String msg){
         Toast.makeText(AdicionarTempoMelhorActivity.this, msg, LENGTH_SHORT).show();
     }
+
+
 
 
 }

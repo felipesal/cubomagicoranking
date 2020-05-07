@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,6 +74,25 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
 
         minutos = findViewById(R.id.editTextMinutos);
         segundos = findViewById(R.id.editTextSegundos);
+        minutos.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 2){
+                    segundos.requestFocus();
+                }
+            }
+        });
+
         recuperar();
 
 
@@ -86,49 +107,58 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.itemSalvar:
                 Log.i("Dados jogador", jogador.getNome());
 
                 segundosString = segundos.getText().toString();
                 segundosInt = Integer.parseInt(segundosString);
+
+
                 minutosString = minutos.getText().toString();
                 minutosInt = Integer.parseInt(minutosString);
 
-                tempo = new Tempo();
-                tempo.setMinutos(minutosInt);
-                tempo.setSegundos(segundosInt);
+                if (segundosInt < 60) {
 
-                jogoSimples = new JogoSimples(tempo , jogador);
+                    tempo = new Tempo();
+                    tempo.setMinutos(minutosInt);
+                    tempo.setSegundos(segundosInt);
+
+                    jogoSimples = new JogoSimples(tempo, jogador);
 
 
-
-
-                try {
-                    if(jogos.size() == 0) {
-                        jogoSimples.salvar();
-                        mostrarToast("Tempo salvo com sucesso");
-                        finish();
-                    }
-                    else {
-                        for (int i = 0; i<jogos.size(); i++){
-                            String id = jogos.get(i).getId();
-                            jogoSimples.setId(id);
+                    try {
+                        if (jogos.size() == 0) {
+                            jogoSimples.salvar();
+                            mostrarToast("Tempo salvo com sucesso");
+                            finish();
+                        } else {
+                            for (int i = 0; i < jogos.size(); i++) {
+                                String id = jogos.get(i).getId();
+                                jogoSimples.setId(id);
+                            }
+                            jogoSimples.atualizar();
+                            mostrarToast("Tempo atualizado");
+                            finish();
                         }
-                        jogoSimples.atualizar();
-                        mostrarToast("Tempo atualizado");
-                        finish();
+                    } catch (Exception e) {
+                        mostrarToast("Erro ao salvar tempo");
+                        e.printStackTrace();
                     }
+                    break;
                 }
-                catch(Exception e){
-                    mostrarToast("Erro ao salvar tempo");
-                    e.printStackTrace();
+                else{
+                    mostrarToast("O campo segundos deve ser menor que 60");
+                    finish();
                 }
-                break;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
+                return super.onOptionsItemSelected(item);
+        }
+
+
+
+
 
     public void mostrarToast(String msg){
         Toast.makeText(AdicionarTempoSimplesActivity.this, msg, LENGTH_SHORT).show();
@@ -170,6 +200,8 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
         });
 
     }
+
+
 
 
 

@@ -7,33 +7,21 @@
     android:layout_gravity="center"
     tools:context=".Activities.AdicionarTempoMelhorActivity">
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Tempo 3:"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toStartOf="@+id/editTextMinuto3"
-        app:layout_constraintTop_toTopOf="@+id/guideline8" />
-
     <EditText
-        android:id="@+id/editTextSegundo3"
+        android:id="@+id/editTextMinuto1"
         android:layout_width="58dp"
         android:layout_height="53dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:ems="10"
         android:foregroundGravity="center"
+        android:gravity="right"
         android:inputType="number"
+        android:maxLength="2"
         android:textSize="26sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSegundo2" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/editTextSegundo1"
@@ -44,10 +32,28 @@
         android:ems="10"
         android:foregroundGravity="center"
         android:inputType="number"
+        android:maxLength="2"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/editTextMinuto2"
+        android:layout_width="58dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:foregroundGravity="center"
+        android:gravity="right"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMinuto1" />
 
     <EditText
         android:id="@+id/editTextSegundo2"
@@ -59,6 +65,7 @@
         android:ems="10"
         android:foregroundGravity="center"
         android:inputType="number"
+        android:maxLength="2"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
@@ -73,16 +80,49 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:foregroundGravity="center"
+        android:gravity="right"
         android:inputType="number"
+        android:maxLength="2"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/editTextMinuto2" />
 
+    <EditText
+        android:id="@+id/editTextSegundo3"
+        android:layout_width="58dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:foregroundGravity="center"
+        android:gravity="left"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSegundo2" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Tempo 3:"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="26sp"
+        app:layout_constraintEnd_toStartOf="@+id/editTextMinuto3"
+        app:layout_constraintTop_toTopOf="@+id/guideline8" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:text="Adicione os tempos"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
@@ -90,35 +130,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextMinuto1"
-        android:layout_width="58dp"
-        android:layout_height="53dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:foregroundGravity="center"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <EditText
-        android:id="@+id/editTextMinuto2"
-        android:layout_width="58dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:foregroundGravity="center"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMinuto1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"

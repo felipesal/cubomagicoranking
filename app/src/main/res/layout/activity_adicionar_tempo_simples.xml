@@ -7,20 +7,6 @@
     tools:context=".Activities.AdicionarTempoSimplesActivity">
 
     <EditText
-        android:id="@+id/editTextSegundos"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:ems="10"
-        android:gravity="left"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="@+id/guideline15" />
-
-    <EditText
         android:id="@+id/editTextMinutos"
         android:layout_width="59dp"
         android:layout_height="59dp"
@@ -31,7 +17,23 @@
         android:inputType="number"
         android:textSize="26sp"
         android:textStyle="bold"
+        android:maxLength="2"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline15" />
+
+    <EditText
+        android:id="@+id/editTextSegundos"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:ems="10"
+        android:gravity="left"
+        android:inputType="number"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:maxLength="2"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline15" />
 
     <androidx.constraintlayout.widget.Guideline

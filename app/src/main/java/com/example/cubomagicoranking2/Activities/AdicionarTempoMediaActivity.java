@@ -4,10 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cubomagicoranking2.Domain.Jogador;
@@ -89,6 +97,16 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
 
         recuperar();
 
+        passarParaProximoEditText(minutos1, segundos1);
+        passarParaProximoEditText(segundos1, minutos2);
+        passarParaProximoEditText(minutos2, segundos2);
+        passarParaProximoEditText(segundos2, minutos3);
+        passarParaProximoEditText(minutos3, segundos3);
+        passarParaProximoEditText(segundos3, minutos4);
+        passarParaProximoEditText(minutos4, segundos4);
+        passarParaProximoEditText(segundos4, minutos5);
+        passarParaProximoEditText(minutos5, segundos5);
+
 
          }
 
@@ -111,7 +129,7 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch(item.getItemId()){
+        switch(item.getItemId()) {
             case R.id.itemSalvar:
                 String min1String = minutos1.getText().toString();
                 String min2String = minutos2.getText().toString();
@@ -137,59 +155,76 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
                 int seg4Int = Integer.parseInt(seg4String);
                 int seg5Int = Integer.parseInt(seg5String);
 
-                tempo1 = new Tempo();
-                tempo2 = new Tempo();
-                tempo3 = new Tempo();
-                tempo4 = new Tempo();
-                tempo5 = new Tempo();
+                if (seg1Int < 60 && seg2Int < 60 && seg3Int < 60 && seg4Int < 60 && seg5Int < 60) {
 
-                tempo1.setSegundos(seg1Int);
-                tempo1.setMinutos(min1Int);
+                    tempo1 = new Tempo();
+                    tempo2 = new Tempo();
+                    tempo3 = new Tempo();
+                    tempo4 = new Tempo();
+                    tempo5 = new Tempo();
 
-                tempo2.setSegundos(seg2Int);
-                tempo2.setMinutos(min2Int);
+                    tempo1.setSegundos(seg1Int);
+                    tempo1.setMinutos(min1Int);
 
-                tempo3.setSegundos(seg3Int);
-                tempo3.setMinutos(min3Int);
+                    tempo2.setSegundos(seg2Int);
+                    tempo2.setMinutos(min2Int);
 
-                tempo4.setSegundos(seg4Int);
-                tempo4.setMinutos(min4Int);
+                    tempo3.setSegundos(seg3Int);
+                    tempo3.setMinutos(min3Int);
 
-                tempo5.setSegundos(seg5Int);
-                tempo5.setMinutos(min5Int);
+                    tempo4.setSegundos(seg4Int);
+                    tempo4.setMinutos(min4Int);
 
-                mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
+                    tempo5.setSegundos(seg5Int);
+                    tempo5.setMinutos(min5Int);
 
-                try{
-                    if(jogos.size() == 0) {
-                        mediaDosCentrais.salvar();
-                        mostrarToast("Tempo salvo com sucesso");
-                        finish();
-                    }
-                    else{
-                        for (int i = 0; i<jogos.size(); i++){
-                            String id = jogos.get(i).getId();
-                            mediaDosCentrais.setId(id);
+                    mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
+
+                    try {
+                        if (jogos.size() == 0) {
+                            mediaDosCentrais.salvar();
+                            mostrarToast("Tempo salvo com sucesso");
+                            finish();
+                        } else {
+                            for (int i = 0; i < jogos.size(); i++) {
+                                String id = jogos.get(i).getId();
+                                mediaDosCentrais.setId(id);
+                            }
+                            mediaDosCentrais.atualizar();
+                            mostrarToast("Tempo atualizado");
+                            finish();
                         }
-                        mediaDosCentrais.atualizar();
-                        mostrarToast("Tempo atualizado");
-                        finish();
+                    } catch (Exception e) {
+                        mostrarToast("Erro ao salvar tempo");
+                        e.printStackTrace();
                     }
-                }
-                catch(Exception e){
-                    mostrarToast("Erro ao salvar tempo");
-                    e.printStackTrace();
-                }
 
 
-                break;
+                    break;
+                }
+                else{
+                    mostrarToast("O campo segundos deve ser menor que 60");
+                    finish();
+                }
         }
+
 
         return super.onOptionsItemSelected(item);
     }
 
     public void mostrarToast(String msg){
-        Toast.makeText(AdicionarTempoMediaActivity.this, msg, LENGTH_SHORT).show();
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText(msg);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 
     private void recuperar() {
@@ -247,5 +282,25 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
         });
     }
 
+    public void passarParaProximoEditText(EditText editText1, final EditText editText2){
+        editText1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 2) {
+                editText2.requestFocus();
+                }
+            }
+        });
+    }
 
 }

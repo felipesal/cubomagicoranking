@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -66,7 +68,7 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
         jogador.setNome(nome);
         jogador.setEmail(email);
 
-        Log.i("Dado jogador", jogador.getId()+", "+ jogador.getNome() + ", " + jogador.getEmail()+ ".");
+        Log.i("Dado jogador", jogador.getId() + ", " + jogador.getNome() + ", " + jogador.getEmail() + ".");
 
 
         minuto1 = findViewById(R.id.editTextMinuto1);
@@ -79,8 +81,11 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
 
         recuperar();
 
-
-
+        passarParaProximoEditText(minuto1, segundo1);
+        passarParaProximoEditText(segundo1, minuto2);
+        passarParaProximoEditText(minuto2, segundo2);
+        passarParaProximoEditText(segundo2, minuto3);
+        passarParaProximoEditText(minuto3, segundo3);
     }
 
     @Override
@@ -92,7 +97,7 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch(item.getItemId()){
+        switch(item.getItemId()) {
             case R.id.itemSalvar:
                 String min1String = minuto1.getText().toString();
                 String min2String = minuto2.getText().toString();
@@ -110,39 +115,44 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
                 int seg2Int = Integer.parseInt(seg2String);
                 int seg3Int = Integer.parseInt(seg3String);
 
-                tempo1 = new Tempo();
-                tempo2 = new Tempo();
-                tempo3 = new Tempo();
+                if (seg1Int < 60 && seg2Int < 60 && seg3Int < 60) {
 
-                tempo1.setMinutos(min1Int);
-                tempo1.setSegundos(seg1Int);
-                tempo2.setMinutos(min2Int);
-                tempo2.setSegundos(seg2Int);
-                tempo3.setMinutos(min3Int);
-                tempo3.setSegundos(seg3Int);
+                    tempo1 = new Tempo();
+                    tempo2 = new Tempo();
+                    tempo3 = new Tempo();
 
-                melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
-                try {
-                    if(jogos.size()==0) {
-                        melhorDeTres.salvar();
-                        mostrarToast("Tempo salvo com sucesso");
-                        finish();
-                    }
-                    else {
-                        for (int i = 0; i<jogos.size(); i++){
-                            String id = jogos.get(i).getId();
-                            melhorDeTres.setId(id);
+                    tempo1.setMinutos(min1Int);
+                    tempo1.setSegundos(seg1Int);
+                    tempo2.setMinutos(min2Int);
+                    tempo2.setSegundos(seg2Int);
+                    tempo3.setMinutos(min3Int);
+                    tempo3.setSegundos(seg3Int);
+
+                    melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
+                    try {
+                        if (jogos.size() == 0) {
+                            melhorDeTres.salvar();
+                            mostrarToast("Tempo salvo com sucesso");
+                            finish();
+                        } else {
+                            for (int i = 0; i < jogos.size(); i++) {
+                                String id = jogos.get(i).getId();
+                                melhorDeTres.setId(id);
+                            }
+                            melhorDeTres.atualizar();
+                            mostrarToast("Tempo atualizado");
+                            finish();
                         }
-                        melhorDeTres.atualizar();
-                        mostrarToast("Tempo atualizado");
-                        finish();
+                    } catch (Exception e) {
+                        mostrarToast("Erro ao salvar tempo");
+                        e.printStackTrace();
                     }
+                    break;
                 }
-                catch(Exception e){
-                    mostrarToast("Erro ao salvar tempo");
-                    e.printStackTrace();
+                else{
+                    mostrarToast("O campo segundos deve ser menor que 60");
+                    finish();
                 }
-                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -190,6 +200,26 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
     }
 
 
+    public void passarParaProximoEditText(EditText editText1, final EditText editText2){
+        editText1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 2){
+                    editText2.requestFocus();
+                }
+            }
+        });
+    }
 
 
 }

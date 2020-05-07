@@ -7,29 +7,191 @@
     android:layout_gravity="center"
     tools:context=".Activities.AdicionarTempoMediaActivity">
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <EditText
+        android:id="@+id/editTextMin1"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Tempo 5"
-        android:textColor="@color/colorPrimaryDark"
+        android:ems="10"
+        android:gravity="right"
+        android:inputType="number"
+        android:maxLength="2"
         android:textSize="26sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editTextMin5"
-        app:layout_constraintEnd_toStartOf="@+id/editTextMin5" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/editTextSeg1"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="left"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/editTextMin2"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:gravity="right"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMin1" />
+
+    <EditText
+        android:id="@+id/editTextSeg2"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="left"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSeg1" />
+
+    <EditText
+        android:id="@+id/editTextMin3"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:gravity="right"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMin2" />
+
+    <EditText
+        android:id="@+id/editTextSeg3"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="left"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSeg2" />
+
+    <EditText
+        android:id="@+id/editTextMin4"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:gravity="right"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMin3" />
+
+    <EditText
+        android:id="@+id/editTextSeg4"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="left"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSeg3" />
+
+    <EditText
+        android:id="@+id/editTextMin5"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:gravity="right"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMin4" />
+
+    <EditText
+        android:id="@+id/editTextSeg5"
+        android:layout_width="59dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:gravity="left"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSeg4" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Tempo 4"
+        android:text="Tempo 1"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="26sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editTextMin4"
-        app:layout_constraintEnd_toStartOf="@+id/editTextMin4" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/editTextMin1"
+        app:layout_constraintEnd_toStartOf="@+id/editTextMin1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Tempo 2"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="26sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editTextMin2"
+        app:layout_constraintEnd_toStartOf="@+id/editTextMin2"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView18"
@@ -41,7 +203,34 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="26sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/editTextMin3"
-        app:layout_constraintEnd_toStartOf="@+id/editTextMin3" />
+        app:layout_constraintEnd_toStartOf="@+id/editTextMin3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Tempo 4"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="26sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editTextMin4"
+        app:layout_constraintEnd_toStartOf="@+id/editTextMin4"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Tempo 5"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="26sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editTextMin5"
+        app:layout_constraintEnd_toStartOf="@+id/editTextMin5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
@@ -55,152 +244,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextSeg5"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSeg4" />
-
-    <EditText
-        android:id="@+id/editTextMin2"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMin1" />
-
-    <EditText
-        android:id="@+id/editTextMin3"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMin2" />
-
-    <EditText
-        android:id="@+id/editTextMin4"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMin3" />
-
-    <EditText
-        android:id="@+id/editTextMin5"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/editTextMin4" />
-
-    <EditText
-        android:id="@+id/editTextSeg1"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <EditText
-        android:id="@+id/editTextSeg2"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSeg1" />
-
-    <EditText
-        android:id="@+id/editTextSeg3"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSeg2" />
-
-    <EditText
-        android:id="@+id/editTextSeg4"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSeg3" />
-
-    <EditText
-        android:id="@+id/editTextMin1"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:ems="10"
-        android:inputType="number"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <TextView
         android:id="@+id/textView11"
@@ -297,27 +346,4 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="309dp" />
 
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Tempo 1"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="26sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editTextMin1"
-        app:layout_constraintEnd_toStartOf="@+id/editTextMin1" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Tempo 2"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="26sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/editTextMin2"
-        app:layout_constraintEnd_toStartOf="@+id/editTextMin2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

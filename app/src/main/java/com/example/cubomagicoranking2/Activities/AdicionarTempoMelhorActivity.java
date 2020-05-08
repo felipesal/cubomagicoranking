@@ -103,59 +103,69 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
 
         switch(item.getItemId()) {
             case R.id.itemSalvar:
-                String min1String = minuto1.getText().toString();
-                String min2String = minuto2.getText().toString();
-                String min3String = minuto3.getText().toString();
+                if (
+                        !minuto1.getText().toString().equals("") &&
+                                !minuto2.getText().toString().equals("") &&
+                                !minuto3.getText().toString().equals("") &&
+                                !segundo1.getText().toString().equals("") &&
+                                !segundo2.getText().toString().equals("") &&
+                                !segundo3.getText().toString().equals("")
+                ) {
+                    String min1String = minuto1.getText().toString();
+                    String min2String = minuto2.getText().toString();
+                    String min3String = minuto3.getText().toString();
 
-                String seg1String = segundo1.getText().toString();
-                String seg2String = segundo2.getText().toString();
-                String seg3String = segundo3.getText().toString();
+                    String seg1String = segundo1.getText().toString();
+                    String seg2String = segundo2.getText().toString();
+                    String seg3String = segundo3.getText().toString();
 
-                int min1Int = Integer.parseInt(min1String);
-                int min2Int = Integer.parseInt(min2String);
-                int min3Int = Integer.parseInt(min3String);
+                    int min1Int = Integer.parseInt(min1String);
+                    int min2Int = Integer.parseInt(min2String);
+                    int min3Int = Integer.parseInt(min3String);
 
-                int seg1Int = Integer.parseInt(seg1String);
-                int seg2Int = Integer.parseInt(seg2String);
-                int seg3Int = Integer.parseInt(seg3String);
+                    int seg1Int = Integer.parseInt(seg1String);
+                    int seg2Int = Integer.parseInt(seg2String);
+                    int seg3Int = Integer.parseInt(seg3String);
 
-                if (seg1Int < 60 && seg2Int < 60 && seg3Int < 60) {
+                    if (seg1Int < 60 && seg2Int < 60 && seg3Int < 60) {
 
-                    tempo1 = new Tempo();
-                    tempo2 = new Tempo();
-                    tempo3 = new Tempo();
 
-                    tempo1.setMinutos(min1Int);
-                    tempo1.setSegundos(seg1Int);
-                    tempo2.setMinutos(min2Int);
-                    tempo2.setSegundos(seg2Int);
-                    tempo3.setMinutos(min3Int);
-                    tempo3.setSegundos(seg3Int);
+                        tempo1 = new Tempo();
+                        tempo2 = new Tempo();
+                        tempo3 = new Tempo();
 
-                    melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
-                    try {
-                        if (jogos.size() == 0) {
-                            melhorDeTres.salvar();
-                            mostrarToast("Tempo salvo com sucesso");
-                            finish();
-                        } else {
-                            for (int i = 0; i < jogos.size(); i++) {
-                                String id = jogos.get(i).getId();
-                                melhorDeTres.setId(id);
+                        tempo1.setMinutos(min1Int);
+                        tempo1.setSegundos(seg1Int);
+                        tempo2.setMinutos(min2Int);
+                        tempo2.setSegundos(seg2Int);
+                        tempo3.setMinutos(min3Int);
+                        tempo3.setSegundos(seg3Int);
+
+                        melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
+                        try {
+                            if (jogos.size() == 0) {
+                                melhorDeTres.salvar();
+                                mostrarToast("Tempo salvo com sucesso");
+                                finish();
+                            } else {
+                                for (int i = 0; i < jogos.size(); i++) {
+                                    String id = jogos.get(i).getId();
+                                    melhorDeTres.setId(id);
+                                }
+                                melhorDeTres.atualizar();
+                                mostrarToast("Tempo atualizado");
+                                finish();
                             }
-                            melhorDeTres.atualizar();
-                            mostrarToast("Tempo atualizado");
-                            finish();
+                        } catch (Exception e) {
+                            mostrarToast("Erro ao salvar tempo");
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        mostrarToast("Erro ao salvar tempo");
-                        e.printStackTrace();
+                        break;
+                    } else {
+                        mostrarToast("O campo segundos deve ser menor que 60");
                     }
-                    break;
-                }
-                else{
-                    mostrarToast("O campo segundos deve ser menor que 60");
-                    finish();
+                }else{
+                    mostrarToast("Preencha todos os campos");
                 }
         }
 

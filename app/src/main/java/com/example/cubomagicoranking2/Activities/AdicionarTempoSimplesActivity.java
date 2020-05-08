@@ -113,47 +113,52 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.itemSalvar:
-                Log.i("Dados jogador", jogador.getNome());
+                if (!segundos.getText().toString().equals("") && !minutos.getText().toString().equals("") ) {
+                    Log.i("Dados jogador", jogador.getNome());
 
-                segundosString = segundos.getText().toString();
-                segundosInt = Integer.parseInt(segundosString);
-
-
-                minutosString = minutos.getText().toString();
-                minutosInt = Integer.parseInt(minutosString);
-
-                if (segundosInt < 60) {
-
-                    tempo = new Tempo();
-                    tempo.setMinutos(minutosInt);
-                    tempo.setSegundos(segundosInt);
-
-                    jogoSimples = new JogoSimples(tempo, jogador);
+                    segundosString = segundos.getText().toString();
+                    segundosInt = Integer.parseInt(segundosString);
 
 
-                    try {
-                        if (jogos.size() == 0) {
-                            jogoSimples.salvar();
-                            mostrarToast("Tempo salvo com sucesso");
-                            finish();
-                        } else {
-                            for (int i = 0; i < jogos.size(); i++) {
-                                String id = jogos.get(i).getId();
-                                jogoSimples.setId(id);
+                    minutosString = minutos.getText().toString();
+                    minutosInt = Integer.parseInt(minutosString);
+
+                    if (segundosInt < 60) {
+
+
+                        tempo = new Tempo();
+                        tempo.setMinutos(minutosInt);
+                        tempo.setSegundos(segundosInt);
+
+                        jogoSimples = new JogoSimples(tempo, jogador);
+
+
+                        try {
+                            if (jogos.size() == 0) {
+                                jogoSimples.salvar();
+                                mostrarToast("Tempo salvo com sucesso");
+                                finish();
+                            } else {
+                                for (int i = 0; i < jogos.size(); i++) {
+                                    String id = jogos.get(i).getId();
+                                    jogoSimples.setId(id);
+                                }
+                                jogoSimples.atualizar();
+                                mostrarToast("Tempo atualizado");
+                                finish();
                             }
-                            jogoSimples.atualizar();
-                            mostrarToast("Tempo atualizado");
-                            finish();
+                        } catch (Exception e) {
+                            mostrarToast("Erro ao salvar tempo");
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        mostrarToast("Erro ao salvar tempo");
-                        e.printStackTrace();
+                        break;
+
+                    } else {
+                        mostrarToast("O campo segundos deve ser menor que 60");
+
                     }
-                    break;
-                }
-                else{
-                    mostrarToast("O campo segundos deve ser menor que 60");
-                    finish();
+                }else{
+                    mostrarToast("Preencha todos os campos");
                 }
         }
 

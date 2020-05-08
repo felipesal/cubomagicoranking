@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,7 +92,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void mostrarToast(String msg){
-        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+
+
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText(msg);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 
     public void validarLogin(){

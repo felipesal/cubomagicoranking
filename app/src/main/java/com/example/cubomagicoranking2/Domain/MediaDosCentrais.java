@@ -217,12 +217,30 @@ public class MediaDosCentrais implements Jogos {
 
 
     public String resultadoEmMinutos() {
+        List<String> tempos = new ArrayList<>();
+        tempos.add(tempo1Str);
+        tempos.add(tempo2Str);
+        tempos.add(tempo3Str);
+        tempos.add(tempo4Str);
+        tempos.add(tempo5Str);
 
-        Tempo tempoEmMinutos = new Tempo();
-        tempoEmMinutos.setSegundos(resultadoSeg);
+        int count = 0;
 
-        resultadoStr = tempoEmMinutos.ofSeconds();
-        return resultadoStr;
+        for (String tempo : tempos) {
+            if (tempo.equals("DNF")) {
+                count += 1;
+            }
+        }
+
+        if (count <= 1) {
+            Tempo tempoEmMinutos = new Tempo();
+            tempoEmMinutos.setSegundos(resultadoSeg);
+
+            resultadoStr = tempoEmMinutos.ofSeconds();
+            return resultadoStr;
+        } else{
+            resultadoStr = "DNF";
+            return  resultadoStr;        }
     }
 
     @Override

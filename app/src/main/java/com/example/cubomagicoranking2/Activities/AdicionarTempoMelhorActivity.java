@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,8 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class AdicionarTempoMelhorActivity extends AppCompatActivity {
 
     private EditText minuto1, minuto2, minuto3, segundo1, segundo2, segundo3;
+
+    private CheckBox dnf1, dnf2, dnf3;
 
     private Tempo tempo1, tempo2, tempo3;
 
@@ -83,6 +86,10 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
         segundo2 = findViewById(R.id.editTextSegundo2);
         segundo3 = findViewById(R.id.editTextSegundo3);
 
+        dnf1 = findViewById(R.id.checkBoxDnf1);
+        dnf2 = findViewById(R.id.checkBoxDnf2);
+        dnf3 = findViewById(R.id.checkBoxDnf3);
+
         recuperar();
 
         passarParaProximoEditText(minuto1, segundo1);
@@ -101,41 +108,107 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.itemSalvar:
-                if (
-                        !minuto1.getText().toString().equals("") &&
-                                !minuto2.getText().toString().equals("") &&
-                                !minuto3.getText().toString().equals("") &&
-                                !segundo1.getText().toString().equals("") &&
-                                !segundo2.getText().toString().equals("") &&
-                                !segundo3.getText().toString().equals("")
-                ) {
-                    String min1String = minuto1.getText().toString();
-                    String min2String = minuto2.getText().toString();
-                    String min3String = minuto3.getText().toString();
+                int count = 0;
+                if (dnf1.isChecked()) {
+                    count += 1;
+                }
+                if (dnf2.isChecked()) {
+                    count += 1;
+                }
+                if (dnf3.isChecked()) {
+                    count += 1;
+                }
 
-                    String seg1String = segundo1.getText().toString();
-                    String seg2String = segundo2.getText().toString();
-                    String seg3String = segundo3.getText().toString();
+                if (count == 0) {
 
-                    int min1Int = Integer.parseInt(min1String);
-                    int min2Int = Integer.parseInt(min2String);
-                    int min3Int = Integer.parseInt(min3String);
+                    if (
+                            !minuto1.getText().toString().equals("") &&
+                                    !minuto2.getText().toString().equals("") &&
+                                    !minuto3.getText().toString().equals("") &&
+                                    !segundo1.getText().toString().equals("") &&
+                                    !segundo2.getText().toString().equals("") &&
+                                    !segundo3.getText().toString().equals("")
+                    ) {
+                        String min1String = minuto1.getText().toString();
+                        String min2String = minuto2.getText().toString();
+                        String min3String = minuto3.getText().toString();
 
-                    int seg1Int = Integer.parseInt(seg1String);
-                    int seg2Int = Integer.parseInt(seg2String);
-                    int seg3Int = Integer.parseInt(seg3String);
+                        String seg1String = segundo1.getText().toString();
+                        String seg2String = segundo2.getText().toString();
+                        String seg3String = segundo3.getText().toString();
 
-                    if (seg1Int < 60 && seg2Int < 60 && seg3Int < 60) {
+                        int min1Int = Integer.parseInt(min1String);
+                        int min2Int = Integer.parseInt(min2String);
+                        int min3Int = Integer.parseInt(min3String);
+
+                        int seg1Int = Integer.parseInt(seg1String);
+                        int seg2Int = Integer.parseInt(seg2String);
+                        int seg3Int = Integer.parseInt(seg3String);
+
+                        if (seg1Int < 60 && seg2Int < 60 && seg3Int < 60) {
 
 
+                            tempo1 = new Tempo();
+                            tempo2 = new Tempo();
+                            tempo3 = new Tempo();
+
+                            tempo1.setMinutos(min1Int);
+                            tempo1.setSegundos(seg1Int);
+                            tempo2.setMinutos(min2Int);
+                            tempo2.setSegundos(seg2Int);
+                            tempo3.setMinutos(min3Int);
+                            tempo3.setSegundos(seg3Int);
+
+                            melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
+                            try {
+                                if (jogos.size() == 0) {
+                                    melhorDeTres.salvar();
+                                    mostrarToast("Tempo salvo com sucesso");
+                                    finish();
+                                } else {
+                                    for (int i = 0; i < jogos.size(); i++) {
+                                        String id = jogos.get(i).getId();
+                                        melhorDeTres.setId(id);
+                                    }
+                                    melhorDeTres.atualizar();
+                                    mostrarToast("Tempo atualizado");
+                                    finish();
+                                }
+                            } catch (Exception e) {
+                                mostrarToast("Erro ao salvar tempo");
+                                e.printStackTrace();
+                            }
+                            break;
+                        } else {
+                            mostrarToast("O campo segundos deve ser menor que 60");
+                        }
+                    } else {
+                        mostrarToast("Preencha todos os campos");
+                    }
+                } else if(count == 1){
+
+                    if (dnf1.isChecked()){
                         tempo1 = new Tempo();
                         tempo2 = new Tempo();
                         tempo3 = new Tempo();
 
-                        tempo1.setMinutos(min1Int);
-                        tempo1.setSegundos(seg1Int);
+                        tempo1.setSegundos(00);
+                        tempo1.setMinutos(1000);
+
+                        String min2String = minuto2.getText().toString();
+                        String min3String = minuto3.getText().toString();
+
+                        String seg2String = segundo2.getText().toString();
+                        String seg3String = segundo3.getText().toString();
+
+                        int min2Int = Integer.parseInt(min2String);
+                        int min3Int = Integer.parseInt(min3String);
+
+                        int seg2Int = Integer.parseInt(seg2String);
+                        int seg3Int = Integer.parseInt(seg3String);
+
                         tempo2.setMinutos(min2Int);
                         tempo2.setSegundos(seg2Int);
                         tempo3.setMinutos(min3Int);
@@ -161,16 +234,144 @@ public class AdicionarTempoMelhorActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         break;
-                    } else {
-                        mostrarToast("O campo segundos deve ser menor que 60");
                     }
-                }else{
-                    mostrarToast("Preencha todos os campos");
+
+                    if (dnf2.isChecked()){
+                        tempo1 = new Tempo();
+                        tempo2 = new Tempo();
+                        tempo3 = new Tempo();
+
+                        tempo2.setSegundos(00);
+                        tempo2.setMinutos(1000);
+
+                        String min1String = minuto1.getText().toString();
+                        String min3String = minuto3.getText().toString();
+
+                        String seg1String = segundo1.getText().toString();
+                        String seg3String = segundo3.getText().toString();
+
+                        int min1Int = Integer.parseInt(min1String);
+                        int min3Int = Integer.parseInt(min3String);
+
+                        int seg1Int = Integer.parseInt(seg1String);
+                        int seg3Int = Integer.parseInt(seg3String);
+
+                        tempo1.setMinutos(min1Int);
+                        tempo1.setSegundos(seg1Int);
+                        tempo3.setMinutos(min3Int);
+                        tempo3.setSegundos(seg3Int);
+
+                        melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
+                        try {
+                            if (jogos.size() == 0) {
+                                melhorDeTres.salvar();
+                                mostrarToast("Tempo salvo com sucesso");
+                                finish();
+                            } else {
+                                for (int i = 0; i < jogos.size(); i++) {
+                                    String id = jogos.get(i).getId();
+                                    melhorDeTres.setId(id);
+                                }
+                                melhorDeTres.atualizar();
+                                mostrarToast("Tempo atualizado");
+                                finish();
+                            }
+                        } catch (Exception e) {
+                            mostrarToast("Erro ao salvar tempo");
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+
+                    if (dnf3.isChecked()){
+                        tempo1 = new Tempo();
+                        tempo2 = new Tempo();
+                        tempo3 = new Tempo();
+
+                        tempo3.setSegundos(00);
+                        tempo3.setMinutos(1000);
+
+                        String min1String = minuto1.getText().toString();
+                        String min2String = minuto2.getText().toString();
+
+                        String seg1String = segundo1.getText().toString();
+                        String seg2String = segundo2.getText().toString();
+
+                        int min1Int = Integer.parseInt(min1String);
+                        int min2Int = Integer.parseInt(min2String);
+
+                        int seg1Int = Integer.parseInt(seg1String);
+                        int seg2Int = Integer.parseInt(seg2String);
+
+                        tempo2.setMinutos(min2Int);
+                        tempo2.setSegundos(seg2Int);
+                        tempo1.setMinutos(min1Int);
+                        tempo1.setSegundos(seg1Int);
+
+                        melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
+                        try {
+                            if (jogos.size() == 0) {
+                                melhorDeTres.salvar();
+                                mostrarToast("Tempo salvo com sucesso");
+                                finish();
+                            } else {
+                                for (int i = 0; i < jogos.size(); i++) {
+                                    String id = jogos.get(i).getId();
+                                    melhorDeTres.setId(id);
+                                }
+                                melhorDeTres.atualizar();
+                                mostrarToast("Tempo atualizado");
+                                finish();
+                            }
+                        } catch (Exception e) {
+                            mostrarToast("Erro ao salvar tempo");
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+
+                } else {
+                    tempo1 = new Tempo();
+                    tempo2 = new Tempo();
+                    tempo3 = new Tempo();
+
+                    tempo1.setSegundos(00);
+                    tempo1.setMinutos(1000);
+
+                    tempo2.setSegundos(00);
+                    tempo2.setMinutos(1000);
+
+                    tempo3.setSegundos(00);
+                    tempo3.setMinutos(1000);
+
+                    melhorDeTres = new MelhorDeTres(jogador, tempo1, tempo2, tempo3);
+
+                    try {
+                        if (jogos.size() == 0) {
+                            melhorDeTres.salvar();
+                            mostrarToast("Tempo salvo com sucesso");
+                            finish();
+                        } else {
+                            for (int i = 0; i < jogos.size(); i++) {
+                                String id = jogos.get(i).getId();
+                                melhorDeTres.setId(id);
+                            }
+                            melhorDeTres.atualizar();
+                            mostrarToast("Tempo atualizado");
+                            finish();
+                        }
+                    } catch (Exception e) {
+                        mostrarToast("Erro ao salvar tempo");
+                        e.printStackTrace();
+                    }
+                    break;
+
                 }
         }
 
-        return super.onOptionsItemSelected(item);
-    }
+                return super.onOptionsItemSelected(item);
+        }
+
 
     public void recuperar(){
 

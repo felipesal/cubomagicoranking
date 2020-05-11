@@ -13,7 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import com.example.cubomagicoranking2.Helper.Base64Custom;
 import com.example.cubomagicoranking2.R;
 import com.example.cubomagicoranking2.config.AuthConfig;
 import com.example.cubomagicoranking2.config.FirebaseConfig;
+import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +42,8 @@ import static android.widget.Toast.LENGTH_SHORT;
 public class AdicionarTempoSimplesActivity extends AppCompatActivity {
 
     private EditText minutos, segundos;
+
+    private CheckBox dnf;
 
     private Tempo tempo;
 
@@ -63,6 +68,9 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_tempo_simples);
+
+        dnf = findViewById(R.id.checkBoxDnf);
+
 
         Bundle bundle = getIntent().getExtras();
         String nome = bundle.getString("nome");
@@ -113,52 +121,90 @@ public class AdicionarTempoSimplesActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.itemSalvar:
-                if (!segundos.getText().toString().equals("") && !minutos.getText().toString().equals("") ) {
-                    Log.i("Dados jogador", jogador.getNome());
+                if (dnf.isChecked()) {
+                    int minutoDnf = 1000;
+                    int segundoDnf = 00;
 
-                    segundosString = segundos.getText().toString();
-                    segundosInt = Integer.parseInt(segundosString);
+                    Tempo tempoDnf = new Tempo();
 
-
-                    minutosString = minutos.getText().toString();
-                    minutosInt = Integer.parseInt(minutosString);
-
-                    if (segundosInt < 60) {
+                    tempoDnf.setMinutos(minutoDnf);
+                    tempoDnf.setSegundos(segundoDnf);
 
 
-                        tempo = new Tempo();
-                        tempo.setMinutos(minutosInt);
-                        tempo.setSegundos(segundosInt);
-
-                        jogoSimples = new JogoSimples(tempo, jogador);
+                    jogoSimples = new JogoSimples(tempoDnf, jogador);
 
 
-                        try {
-                            if (jogos.size() == 0) {
-                                jogoSimples.salvar();
-                                mostrarToast("Tempo salvo com sucesso");
-                                finish();
-                            } else {
-                                for (int i = 0; i < jogos.size(); i++) {
-                                    String id = jogos.get(i).getId();
-                                    jogoSimples.setId(id);
-                                }
-                                jogoSimples.atualizar();
-                                mostrarToast("Tempo atualizado");
-                                finish();
+                    try {
+                        if (jogos.size() == 0) {
+                            jogoSimples.salvar();
+                            mostrarToast("Tempo salvo com sucesso");
+                            finish();
+                        } else {
+                            for (int i = 0; i < jogos.size(); i++) {
+                                String id = jogos.get(i).getId();
+                                jogoSimples.setId(id);
                             }
-                        } catch (Exception e) {
-                            mostrarToast("Erro ao salvar tempo");
-                            e.printStackTrace();
+                            jogoSimples.atualizar();
+                            mostrarToast("Tempo atualizado");
+                            finish();
                         }
-                        break;
-
-                    } else {
-                        mostrarToast("O campo segundos deve ser menor que 60");
-
+                    } catch (Exception e) {
+                        mostrarToast("Erro ao salvar tempo");
+                        e.printStackTrace();
                     }
-                }else{
-                    mostrarToast("Preencha todos os campos");
+                    break;
+
+
+        }
+
+                else {
+                    if (!segundos.getText().toString().equals("") && !minutos.getText().toString().equals("")) {
+                        Log.i("Dados jogador", jogador.getNome());
+
+                        segundosString = segundos.getText().toString();
+                        segundosInt = Integer.parseInt(segundosString);
+
+
+                        minutosString = minutos.getText().toString();
+                        minutosInt = Integer.parseInt(minutosString);
+
+                        if (segundosInt < 60) {
+
+
+                            tempo = new Tempo();
+                            tempo.setMinutos(minutosInt);
+                            tempo.setSegundos(segundosInt);
+
+                            jogoSimples = new JogoSimples(tempo, jogador);
+
+
+                            try {
+                                if (jogos.size() == 0) {
+                                    jogoSimples.salvar();
+                                    mostrarToast("Tempo salvo com sucesso");
+                                    finish();
+                                } else {
+                                    for (int i = 0; i < jogos.size(); i++) {
+                                        String id = jogos.get(i).getId();
+                                        jogoSimples.setId(id);
+                                    }
+                                    jogoSimples.atualizar();
+                                    mostrarToast("Tempo atualizado");
+                                    finish();
+                                }
+                            } catch (Exception e) {
+                                mostrarToast("Erro ao salvar tempo");
+                                e.printStackTrace();
+                            }
+                            break;
+
+                        } else {
+                            mostrarToast("O campo segundos deve ser menor que 60");
+
+                        }
+                    } else {
+                        mostrarToast("Preencha todos os campos");
+                    }
                 }
         }
 

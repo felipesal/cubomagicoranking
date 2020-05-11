@@ -346,4 +346,54 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="309dp" />
 
+    <CheckBox
+        android:id="@+id/checkBoxDnfM1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DNF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextSeg1"
+        app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+    <CheckBox
+        android:id="@+id/checkBoxDnfM2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DNF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextSeg2"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+
+    <CheckBox
+        android:id="@+id/checkBoxDnfM3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DNF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextSeg3"
+        app:layout_constraintTop_toTopOf="@+id/guideline12" />
+
+    <CheckBox
+        android:id="@+id/checkBoxDnfM4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DNF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextSeg4"
+        app:layout_constraintTop_toTopOf="@+id/guideline13" />
+
+    <CheckBox
+        android:id="@+id/checkBoxDnfM5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="DNF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextSeg5"
+        app:layout_constraintTop_toTopOf="@+id/guideline14" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

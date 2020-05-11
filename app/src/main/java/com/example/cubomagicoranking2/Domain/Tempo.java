@@ -48,6 +48,9 @@ public class Tempo {
     }
 
     public String toString() {
+        if(minutos == 1000){
+            return "DNF";
+        }
         if(String.valueOf(segundos).length() == 1 && String.valueOf(minutos).length() == 1) {
             return "0" + minutos + ":0" + segundos;
         }

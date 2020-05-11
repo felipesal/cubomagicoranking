@@ -34,7 +34,7 @@ public class MelhorDeTres implements Jogos {
         this.tempo1Seg = tempo1.toSeconds();
         this.tempo1Str = tempo1.toString();
         this.tempo2Seg = tempo2.toSeconds();
-        this.tempo2Str = tempo3.toString();
+        this.tempo2Str = tempo2.toString();
         this.tempo3Seg = tempo3.toSeconds();
         this.tempo3Str = tempo3.toString();
         resultadoEmSegundos();
@@ -148,14 +148,22 @@ public class MelhorDeTres implements Jogos {
 
 
     public String resultadoEmMinutos() {
+        if(
+                (tempo1Str.equals("DNF") && tempo2Str.equals("DNF")) ||
+                (tempo1Str.equals("DNF") && tempo3Str.equals("DNF")) ||
+                (tempo2Str.equals("DNF") && tempo3Str.equals("DNF"))
+        ){
+            tempoFinalStr = "DNF";
+            return tempoFinalStr;
+        }
+        else {
+            Tempo tempoBonito = new Tempo();
+            tempoBonito.setSegundos(tempoFinalSeg);
 
-        Tempo tempoBonito = new Tempo();
-        tempoBonito.setSegundos(tempoFinalSeg);
+            tempoFinalStr = tempoBonito.ofSeconds();
 
-        tempoFinalStr = tempoBonito.ofSeconds();
-
-        return tempoFinalStr;
-
+            return tempoFinalStr;
+        }
     }
 
     @Override

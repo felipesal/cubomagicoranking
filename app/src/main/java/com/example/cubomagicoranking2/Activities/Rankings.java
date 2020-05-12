@@ -56,7 +56,7 @@ public class Rankings extends AppCompatActivity {
 
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(), FragmentPagerItems.with(this)
-                .add("Simples", SimplesFragment.class)
+                .add("Speed", SimplesFragment.class)
                 .add("Melhor", MelhorDeTresFragment.class)
                 .add("Média", MediaDosCentraisFragment.class)
                 .create());

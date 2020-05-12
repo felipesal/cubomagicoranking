@@ -151,7 +151,7 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
                 if (count == 0) {
 
                     if (
-                            !minutos1.getText().toString().equals("") &&
+                                    !minutos1.getText().toString().equals("") &&
                                     !minutos2.getText().toString().equals("") &&
                                     !minutos3.getText().toString().equals("") &&
                                     !minutos4.getText().toString().equals("") &&
@@ -242,381 +242,466 @@ public class AdicionarTempoMediaActivity extends AppCompatActivity {
                 } else if (count == 1) {
 
                     if (dnf1.isChecked()) {
+                        if (
 
-                        String min2String = minutos2.getText().toString();
-                        String min3String = minutos3.getText().toString();
-                        String min4String = minutos4.getText().toString();
-                        String min5String = minutos5.getText().toString();
+                                !minutos2.getText().toString().equals("") &&
+                                        !minutos3.getText().toString().equals("") &&
+                                        !minutos4.getText().toString().equals("") &&
+                                        !minutos5.getText().toString().equals("") &&
+                                        !segundos2.getText().toString().equals("") &&
+                                        !segundos3.getText().toString().equals("") &&
+                                        !segundos4.getText().toString().equals("") &&
+                                        !segundos5.getText().toString().equals("")
+                        ) {
 
-
-                        String seg2String = segundos2.getText().toString();
-                        String seg3String = segundos3.getText().toString();
-                        String seg4String = segundos4.getText().toString();
-                        String seg5String = segundos5.getText().toString();
-
-
-                        int min2Int = Integer.parseInt(min2String);
-                        int min3Int = Integer.parseInt(min3String);
-                        int min4Int = Integer.parseInt(min4String);
-                        int min5Int = Integer.parseInt(min5String);
-
-
-                        int seg2Int = Integer.parseInt(seg2String);
-                        int seg3Int = Integer.parseInt(seg3String);
-                        int seg4Int = Integer.parseInt(seg4String);
-                        int seg5Int = Integer.parseInt(seg5String);
-
-
-
-                            tempo1 = new Tempo();
-                            tempo2 = new Tempo();
-                            tempo3 = new Tempo();
-                            tempo4 = new Tempo();
-                            tempo5 = new Tempo();
-
-                            tempo1.setSegundos(00);
-                            tempo1.setMinutos(1000);
-
-                            tempo2.setSegundos(seg2Int);
-                            tempo2.setMinutos(min2Int);
-
-                            tempo3.setSegundos(seg3Int);
-                            tempo3.setMinutos(min3Int);
-
-                            tempo4.setSegundos(seg4Int);
-                            tempo4.setMinutos(min4Int);
-
-                            tempo5.setSegundos(seg5Int);
-                            tempo5.setMinutos(min5Int);
-
-                            mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
-
-                            try {
-                                if (jogos.size() == 0) {
-                                    mediaDosCentrais.salvar();
-                                    mostrarToast("Tempo salvo com sucesso");
-                                    finish();
-                                } else {
-                                    for (int i = 0; i < jogos.size(); i++) {
-                                        String id = jogos.get(i).getId();
-                                        mediaDosCentrais.setId(id);
-                                    }
-                                    mediaDosCentrais.atualizar();
-                                    mostrarToast("Tempo atualizado");
-                                    finish();
-                                }
-                            } catch (Exception e) {
-                                mostrarToast("Erro ao salvar tempo");
-                                e.printStackTrace();
-                            }
-
-
-                            break;
-
-                        }
-
-                        if (dnf2.isChecked()) {
-
-
-                            String min1String = minutos1.getText().toString();
-
+                            String min2String = minutos2.getText().toString();
                             String min3String = minutos3.getText().toString();
                             String min4String = minutos4.getText().toString();
                             String min5String = minutos5.getText().toString();
 
-                            String seg1String = segundos1.getText().toString();
 
+                            String seg2String = segundos2.getText().toString();
                             String seg3String = segundos3.getText().toString();
                             String seg4String = segundos4.getText().toString();
                             String seg5String = segundos5.getText().toString();
 
-                            int min1Int = Integer.parseInt(min1String);
 
+                            int min2Int = Integer.parseInt(min2String);
                             int min3Int = Integer.parseInt(min3String);
                             int min4Int = Integer.parseInt(min4String);
                             int min5Int = Integer.parseInt(min5String);
 
-                            int seg1Int = Integer.parseInt(seg1String);
 
+                            int seg2Int = Integer.parseInt(seg2String);
                             int seg3Int = Integer.parseInt(seg3String);
                             int seg4Int = Integer.parseInt(seg4String);
                             int seg5Int = Integer.parseInt(seg5String);
 
+                            if (seg2Int < 60 && seg3Int < 60 && seg4Int < 60 && seg5Int < 60) {
+                                tempo1 = new Tempo();
+                                tempo2 = new Tempo();
+                                tempo3 = new Tempo();
+                                tempo4 = new Tempo();
+                                tempo5 = new Tempo();
 
+                                tempo1.setSegundos(00);
+                                tempo1.setMinutos(1000);
 
-                            tempo1 = new Tempo();
-                            tempo2 = new Tempo();
-                            tempo3 = new Tempo();
-                            tempo4 = new Tempo();
-                            tempo5 = new Tempo();
+                                tempo2.setSegundos(seg2Int);
+                                tempo2.setMinutos(min2Int);
 
-                            tempo1.setSegundos(seg1Int);
-                            tempo1.setMinutos(min1Int);
+                                tempo3.setSegundos(seg3Int);
+                                tempo3.setMinutos(min3Int);
 
-                            tempo2.setSegundos(00);
-                            tempo2.setMinutos(1000);
+                                tempo4.setSegundos(seg4Int);
+                                tempo4.setMinutos(min4Int);
 
-                            tempo3.setSegundos(seg3Int);
-                            tempo3.setMinutos(min3Int);
+                                tempo5.setSegundos(seg5Int);
+                                tempo5.setMinutos(min5Int);
 
-                            tempo4.setSegundos(seg4Int);
-                            tempo4.setMinutos(min4Int);
+                                mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
 
-                            tempo5.setSegundos(seg5Int);
-                            tempo5.setMinutos(min5Int);
-
-                            mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
-
-                            try {
-                                if (jogos.size() == 0) {
-                                    mediaDosCentrais.salvar();
-                                    mostrarToast("Tempo salvo com sucesso");
-                                    finish();
-                                } else {
-                                    for (int i = 0; i < jogos.size(); i++) {
-                                        String id = jogos.get(i).getId();
-                                        mediaDosCentrais.setId(id);
+                                try {
+                                    if (jogos.size() == 0) {
+                                        mediaDosCentrais.salvar();
+                                        mostrarToast("Tempo salvo com sucesso");
+                                        finish();
+                                    } else {
+                                        for (int i = 0; i < jogos.size(); i++) {
+                                            String id = jogos.get(i).getId();
+                                            mediaDosCentrais.setId(id);
+                                        }
+                                        mediaDosCentrais.atualizar();
+                                        mostrarToast("Tempo atualizado");
+                                        finish();
                                     }
-                                    mediaDosCentrais.atualizar();
-                                    mostrarToast("Tempo atualizado");
-                                    finish();
+                                } catch (Exception e) {
+                                    mostrarToast("Erro ao salvar tempo");
+                                    e.printStackTrace();
                                 }
-                            } catch (Exception e) {
-                                mostrarToast("Erro ao salvar tempo");
-                                e.printStackTrace();
+
+
+                                break;
+
+                            }else {
+                                mostrarToast("O campo segundos deve ser menor que 60");
+
                             }
+                        }else {
+                            mostrarToast("Preencha todos os campos");
+                        }
+                }
+
+                        if (dnf2.isChecked()) {
+                            if (
+                                    !minutos1.getText().toString().equals("") &&
+
+                                            !minutos3.getText().toString().equals("") &&
+                                            !minutos4.getText().toString().equals("") &&
+                                            !minutos5.getText().toString().equals("") &&
+                                            !segundos1.getText().toString().equals("") &&
+
+                                            !segundos3.getText().toString().equals("") &&
+                                            !segundos4.getText().toString().equals("") &&
+                                            !segundos5.getText().toString().equals("")
+                            ) {
 
 
-                            break;
+                                String min1String = minutos1.getText().toString();
 
+                                String min3String = minutos3.getText().toString();
+                                String min4String = minutos4.getText().toString();
+                                String min5String = minutos5.getText().toString();
+
+                                String seg1String = segundos1.getText().toString();
+
+                                String seg3String = segundos3.getText().toString();
+                                String seg4String = segundos4.getText().toString();
+                                String seg5String = segundos5.getText().toString();
+
+                                int min1Int = Integer.parseInt(min1String);
+
+                                int min3Int = Integer.parseInt(min3String);
+                                int min4Int = Integer.parseInt(min4String);
+                                int min5Int = Integer.parseInt(min5String);
+
+                                int seg1Int = Integer.parseInt(seg1String);
+
+                                int seg3Int = Integer.parseInt(seg3String);
+                                int seg4Int = Integer.parseInt(seg4String);
+                                int seg5Int = Integer.parseInt(seg5String);
+
+                                if (seg1Int < 60 && seg3Int < 60 && seg4Int < 60 && seg5Int < 60) {
+                                    tempo1 = new Tempo();
+                                    tempo2 = new Tempo();
+                                    tempo3 = new Tempo();
+                                    tempo4 = new Tempo();
+                                    tempo5 = new Tempo();
+
+                                    tempo1.setSegundos(seg1Int);
+                                    tempo1.setMinutos(min1Int);
+
+                                    tempo2.setSegundos(00);
+                                    tempo2.setMinutos(1000);
+
+                                    tempo3.setSegundos(seg3Int);
+                                    tempo3.setMinutos(min3Int);
+
+                                    tempo4.setSegundos(seg4Int);
+                                    tempo4.setMinutos(min4Int);
+
+                                    tempo5.setSegundos(seg5Int);
+                                    tempo5.setMinutos(min5Int);
+
+                                    mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
+
+                                    try {
+                                        if (jogos.size() == 0) {
+                                            mediaDosCentrais.salvar();
+                                            mostrarToast("Tempo salvo com sucesso");
+                                            finish();
+                                        } else {
+                                            for (int i = 0; i < jogos.size(); i++) {
+                                                String id = jogos.get(i).getId();
+                                                mediaDosCentrais.setId(id);
+                                            }
+                                            mediaDosCentrais.atualizar();
+                                            mostrarToast("Tempo atualizado");
+                                            finish();
+                                        }
+                                    } catch (Exception e) {
+                                        mostrarToast("Erro ao salvar tempo");
+                                        e.printStackTrace();
+                                    }
+
+
+                                    break;
+
+                                }else {
+                                    mostrarToast("O campo segundos deve ser menor que 60");
+
+                                }
+                            }else {
+                                mostrarToast("Preencha todos os campos");
+                            }
                         }
 
                         if (dnf3.isChecked()) {
+                            if (
+                                    !minutos1.getText().toString().equals("") &&
+                                            !minutos2.getText().toString().equals("") &&
 
+                                            !minutos4.getText().toString().equals("") &&
+                                            !minutos5.getText().toString().equals("") &&
+                                            !segundos1.getText().toString().equals("") &&
+                                            !segundos2.getText().toString().equals("") &&
 
-                            String min1String = minutos1.getText().toString();
-                            String min2String = minutos2.getText().toString();
+                                            !segundos4.getText().toString().equals("") &&
+                                            !segundos5.getText().toString().equals("")
+                            ) {
 
-                            String min4String = minutos4.getText().toString();
-                            String min5String = minutos5.getText().toString();
+                                String min1String = minutos1.getText().toString();
+                                String min2String = minutos2.getText().toString();
 
-                            String seg1String = segundos1.getText().toString();
-                            String seg2String = segundos2.getText().toString();
+                                String min4String = minutos4.getText().toString();
+                                String min5String = minutos5.getText().toString();
 
-                            String seg4String = segundos4.getText().toString();
-                            String seg5String = segundos5.getText().toString();
+                                String seg1String = segundos1.getText().toString();
+                                String seg2String = segundos2.getText().toString();
 
-                            int min1Int = Integer.parseInt(min1String);
-                            int min2Int = Integer.parseInt(min2String);
+                                String seg4String = segundos4.getText().toString();
+                                String seg5String = segundos5.getText().toString();
 
-                            int min4Int = Integer.parseInt(min4String);
-                            int min5Int = Integer.parseInt(min5String);
+                                int min1Int = Integer.parseInt(min1String);
+                                int min2Int = Integer.parseInt(min2String);
 
-                            int seg1Int = Integer.parseInt(seg1String);
-                            int seg2Int = Integer.parseInt(seg2String);
+                                int min4Int = Integer.parseInt(min4String);
+                                int min5Int = Integer.parseInt(min5String);
 
-                            int seg4Int = Integer.parseInt(seg4String);
-                            int seg5Int = Integer.parseInt(seg5String);
+                                int seg1Int = Integer.parseInt(seg1String);
+                                int seg2Int = Integer.parseInt(seg2String);
 
+                                int seg4Int = Integer.parseInt(seg4String);
+                                int seg5Int = Integer.parseInt(seg5String);
 
+                                if (seg1Int < 60 && seg2Int < 60 && seg4Int < 60 && seg5Int < 60) {
+                                    tempo1 = new Tempo();
+                                    tempo2 = new Tempo();
+                                    tempo3 = new Tempo();
+                                    tempo4 = new Tempo();
+                                    tempo5 = new Tempo();
 
-                            tempo1 = new Tempo();
-                            tempo2 = new Tempo();
-                            tempo3 = new Tempo();
-                            tempo4 = new Tempo();
-                            tempo5 = new Tempo();
+                                    tempo1.setSegundos(seg1Int);
+                                    tempo1.setMinutos(min1Int);
 
-                            tempo1.setSegundos(seg1Int);
-                            tempo1.setMinutos(min1Int);
+                                    tempo2.setSegundos(seg2Int);
+                                    tempo2.setMinutos(min2Int);
 
-                            tempo2.setSegundos(seg2Int);
-                            tempo2.setMinutos(min2Int);
+                                    tempo3.setSegundos(00);
+                                    tempo3.setMinutos(1000);
 
-                            tempo3.setSegundos(00);
-                            tempo3.setMinutos(1000);
+                                    tempo4.setSegundos(seg4Int);
+                                    tempo4.setMinutos(min4Int);
 
-                            tempo4.setSegundos(seg4Int);
-                            tempo4.setMinutos(min4Int);
+                                    tempo5.setSegundos(seg5Int);
+                                    tempo5.setMinutos(min5Int);
 
-                            tempo5.setSegundos(seg5Int);
-                            tempo5.setMinutos(min5Int);
+                                    mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
 
-                            mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
-
-                            try {
-                                if (jogos.size() == 0) {
-                                    mediaDosCentrais.salvar();
-                                    mostrarToast("Tempo salvo com sucesso");
-                                    finish();
-                                } else {
-                                    for (int i = 0; i < jogos.size(); i++) {
-                                        String id = jogos.get(i).getId();
-                                        mediaDosCentrais.setId(id);
+                                    try {
+                                        if (jogos.size() == 0) {
+                                            mediaDosCentrais.salvar();
+                                            mostrarToast("Tempo salvo com sucesso");
+                                            finish();
+                                        } else {
+                                            for (int i = 0; i < jogos.size(); i++) {
+                                                String id = jogos.get(i).getId();
+                                                mediaDosCentrais.setId(id);
+                                            }
+                                            mediaDosCentrais.atualizar();
+                                            mostrarToast("Tempo atualizado");
+                                            finish();
+                                        }
+                                    } catch (Exception e) {
+                                        mostrarToast("Erro ao salvar tempo");
+                                        e.printStackTrace();
                                     }
-                                    mediaDosCentrais.atualizar();
-                                    mostrarToast("Tempo atualizado");
-                                    finish();
+
+
+                                    break;
+
+                                }else {
+                                    mostrarToast("O campo segundos deve ser menor que 60");
+
                                 }
-                            } catch (Exception e) {
-                                mostrarToast("Erro ao salvar tempo");
-                                e.printStackTrace();
+                            }else {
+                                mostrarToast("Preencha todos os campos");
                             }
-
-
-                            break;
-
                         }
 
                         if (dnf4.isChecked()) {
+                            if (
+                                            !minutos1.getText().toString().equals("") &&
+                                            !minutos2.getText().toString().equals("") &&
+                                            !minutos3.getText().toString().equals("") &&
+                                            !minutos5.getText().toString().equals("") &&
+                                            !segundos1.getText().toString().equals("") &&
+                                            !segundos2.getText().toString().equals("") &&
+                                            !segundos3.getText().toString().equals("") &&
+                                            !segundos5.getText().toString().equals("")
+                            ) {
 
 
-                            String min1String = minutos1.getText().toString();
-                            String min2String = minutos2.getText().toString();
-                            String min3String = minutos3.getText().toString();
+                                String min1String = minutos1.getText().toString();
+                                String min2String = minutos2.getText().toString();
+                                String min3String = minutos3.getText().toString();
 
-                            String min5String = minutos5.getText().toString();
+                                String min5String = minutos5.getText().toString();
 
-                            String seg1String = segundos1.getText().toString();
-                            String seg2String = segundos2.getText().toString();
-                            String seg3String = segundos3.getText().toString();
+                                String seg1String = segundos1.getText().toString();
+                                String seg2String = segundos2.getText().toString();
+                                String seg3String = segundos3.getText().toString();
 
-                            String seg5String = segundos5.getText().toString();
+                                String seg5String = segundos5.getText().toString();
 
-                            int min1Int = Integer.parseInt(min1String);
-                            int min2Int = Integer.parseInt(min2String);
-                            int min3Int = Integer.parseInt(min3String);
+                                int min1Int = Integer.parseInt(min1String);
+                                int min2Int = Integer.parseInt(min2String);
+                                int min3Int = Integer.parseInt(min3String);
 
-                            int min5Int = Integer.parseInt(min5String);
+                                int min5Int = Integer.parseInt(min5String);
 
-                            int seg1Int = Integer.parseInt(seg1String);
-                            int seg2Int = Integer.parseInt(seg2String);
-                            int seg3Int = Integer.parseInt(seg3String);
+                                int seg1Int = Integer.parseInt(seg1String);
+                                int seg2Int = Integer.parseInt(seg2String);
+                                int seg3Int = Integer.parseInt(seg3String);
 
-                            int seg5Int = Integer.parseInt(seg5String);
+                                int seg5Int = Integer.parseInt(seg5String);
 
+                                if (seg1Int < 60 && seg2Int < 60 && seg3Int < 60 && seg5Int < 60) {
+                                    tempo1 = new Tempo();
+                                    tempo2 = new Tempo();
+                                    tempo3 = new Tempo();
+                                    tempo4 = new Tempo();
+                                    tempo5 = new Tempo();
 
+                                    tempo1.setSegundos(seg1Int);
+                                    tempo1.setMinutos(min1Int);
 
-                            tempo1 = new Tempo();
-                            tempo2 = new Tempo();
-                            tempo3 = new Tempo();
-                            tempo4 = new Tempo();
-                            tempo5 = new Tempo();
+                                    tempo2.setSegundos(seg2Int);
+                                    tempo2.setMinutos(min2Int);
 
-                            tempo1.setSegundos(seg1Int);
-                            tempo1.setMinutos(min1Int);
+                                    tempo3.setSegundos(seg3Int);
+                                    tempo3.setMinutos(min3Int);
 
-                            tempo2.setSegundos(seg2Int);
-                            tempo2.setMinutos(min2Int);
+                                    tempo4.setSegundos(00);
+                                    tempo4.setMinutos(1000);
 
-                            tempo3.setSegundos(seg3Int);
-                            tempo3.setMinutos(min3Int);
+                                    tempo5.setSegundos(seg5Int);
+                                    tempo5.setMinutos(min5Int);
 
-                            tempo4.setSegundos(00);
-                            tempo4.setMinutos(1000);
+                                    mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
 
-                            tempo5.setSegundos(seg5Int);
-                            tempo5.setMinutos(min5Int);
-
-                            mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
-
-                            try {
-                                if (jogos.size() == 0) {
-                                    mediaDosCentrais.salvar();
-                                    mostrarToast("Tempo salvo com sucesso");
-                                    finish();
-                                } else {
-                                    for (int i = 0; i < jogos.size(); i++) {
-                                        String id = jogos.get(i).getId();
-                                        mediaDosCentrais.setId(id);
+                                    try {
+                                        if (jogos.size() == 0) {
+                                            mediaDosCentrais.salvar();
+                                            mostrarToast("Tempo salvo com sucesso");
+                                            finish();
+                                        } else {
+                                            for (int i = 0; i < jogos.size(); i++) {
+                                                String id = jogos.get(i).getId();
+                                                mediaDosCentrais.setId(id);
+                                            }
+                                            mediaDosCentrais.atualizar();
+                                            mostrarToast("Tempo atualizado");
+                                            finish();
+                                        }
+                                    } catch (Exception e) {
+                                        mostrarToast("Erro ao salvar tempo");
+                                        e.printStackTrace();
                                     }
-                                    mediaDosCentrais.atualizar();
-                                    mostrarToast("Tempo atualizado");
-                                    finish();
+
+
+                                    break;
+
+                                }else {
+                                    mostrarToast("O campo segundos deve ser menor que 60");
+
                                 }
-                            } catch (Exception e) {
-                                mostrarToast("Erro ao salvar tempo");
-                                e.printStackTrace();
+                            }else {
+                                mostrarToast("Preencha todos os campos");
                             }
-
-
-                            break;
-
                         }
 
                         if (dnf5.isChecked()) {
+                            if (
+                                    !minutos1.getText().toString().equals("") &&
+                                            !minutos2.getText().toString().equals("") &&
+                                            !minutos3.getText().toString().equals("") &&
+                                            !minutos4.getText().toString().equals("") &&
 
-                            String min1String = minutos1.getText().toString();
-                            String min2String = minutos2.getText().toString();
-                            String min3String = minutos3.getText().toString();
-                            String min4String = minutos4.getText().toString();
+                                            !segundos1.getText().toString().equals("") &&
+                                            !segundos2.getText().toString().equals("") &&
+                                            !segundos3.getText().toString().equals("") &&
+                                            !segundos4.getText().toString().equals("")
 
+                            ) {
 
-                            String seg1String = segundos1.getText().toString();
-                            String seg2String = segundos2.getText().toString();
-                            String seg3String = segundos3.getText().toString();
-                            String seg4String = segundos4.getText().toString();
-
-
-                            int min1Int = Integer.parseInt(min1String);
-                            int min2Int = Integer.parseInt(min2String);
-                            int min3Int = Integer.parseInt(min3String);
-                            int min4Int = Integer.parseInt(min4String);
-
-
-                            int seg1Int = Integer.parseInt(seg1String);
-                            int seg2Int = Integer.parseInt(seg2String);
-                            int seg3Int = Integer.parseInt(seg3String);
-                            int seg4Int = Integer.parseInt(seg4String);
+                                String min1String = minutos1.getText().toString();
+                                String min2String = minutos2.getText().toString();
+                                String min3String = minutos3.getText().toString();
+                                String min4String = minutos4.getText().toString();
 
 
+                                String seg1String = segundos1.getText().toString();
+                                String seg2String = segundos2.getText().toString();
+                                String seg3String = segundos3.getText().toString();
+                                String seg4String = segundos4.getText().toString();
 
 
-                            tempo1 = new Tempo();
-                            tempo2 = new Tempo();
-                            tempo3 = new Tempo();
-                            tempo4 = new Tempo();
-                            tempo5 = new Tempo();
-
-                            tempo1.setSegundos(seg1Int);
-                            tempo1.setMinutos(min1Int);
-
-                            tempo2.setSegundos(seg2Int);
-                            tempo2.setMinutos(min2Int);
-
-                            tempo3.setSegundos(seg3Int);
-                            tempo3.setMinutos(min3Int);
-
-                            tempo4.setSegundos(seg4Int);
-                            tempo4.setMinutos(min4Int);
-
-                            tempo5.setSegundos(00);
-                            tempo5.setMinutos(1000);
+                                int min1Int = Integer.parseInt(min1String);
+                                int min2Int = Integer.parseInt(min2String);
+                                int min3Int = Integer.parseInt(min3String);
+                                int min4Int = Integer.parseInt(min4String);
 
 
-                            mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
+                                int seg1Int = Integer.parseInt(seg1String);
+                                int seg2Int = Integer.parseInt(seg2String);
+                                int seg3Int = Integer.parseInt(seg3String);
+                                int seg4Int = Integer.parseInt(seg4String);
 
-                            try {
-                                if (jogos.size() == 0) {
-                                    mediaDosCentrais.salvar();
-                                    mostrarToast("Tempo salvo com sucesso");
-                                    finish();
-                                } else {
-                                    for (int i = 0; i < jogos.size(); i++) {
-                                        String id = jogos.get(i).getId();
-                                        mediaDosCentrais.setId(id);
+                                if (seg1Int < 60 && seg2Int < 60 && seg3Int < 60 && seg4Int < 60) {
+                                    tempo1 = new Tempo();
+                                    tempo2 = new Tempo();
+                                    tempo3 = new Tempo();
+                                    tempo4 = new Tempo();
+                                    tempo5 = new Tempo();
+
+                                    tempo1.setSegundos(seg1Int);
+                                    tempo1.setMinutos(min1Int);
+
+                                    tempo2.setSegundos(seg2Int);
+                                    tempo2.setMinutos(min2Int);
+
+                                    tempo3.setSegundos(seg3Int);
+                                    tempo3.setMinutos(min3Int);
+
+                                    tempo4.setSegundos(seg4Int);
+                                    tempo4.setMinutos(min4Int);
+
+                                    tempo5.setSegundos(00);
+                                    tempo5.setMinutos(1000);
+
+
+                                    mediaDosCentrais = new MediaDosCentrais(jogador, tempo1, tempo2, tempo3, tempo4, tempo5);
+
+                                    try {
+                                        if (jogos.size() == 0) {
+                                            mediaDosCentrais.salvar();
+                                            mostrarToast("Tempo salvo com sucesso");
+                                            finish();
+                                        } else {
+                                            for (int i = 0; i < jogos.size(); i++) {
+                                                String id = jogos.get(i).getId();
+                                                mediaDosCentrais.setId(id);
+                                            }
+                                            mediaDosCentrais.atualizar();
+                                            mostrarToast("Tempo atualizado");
+                                            finish();
+                                        }
+                                    } catch (Exception e) {
+                                        mostrarToast("Erro ao salvar tempo");
+                                        e.printStackTrace();
                                     }
-                                    mediaDosCentrais.atualizar();
-                                    mostrarToast("Tempo atualizado");
-                                    finish();
+
+
+                                    break;
+
+                                }else {
+                                    mostrarToast("O campo segundos deve ser menor que 60");
+
                                 }
-                            } catch (Exception e) {
-                                mostrarToast("Erro ao salvar tempo");
-                                e.printStackTrace();
+                            }else {
+                                mostrarToast("Preencha todos os campos");
                             }
-
-
-                            break;
-
                         }
 
 

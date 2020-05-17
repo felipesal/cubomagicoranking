@@ -162,6 +162,7 @@ public class SimplesFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayout.VERTICAL));
         recyclerView.setAdapter(adapterSimples);
     }
 

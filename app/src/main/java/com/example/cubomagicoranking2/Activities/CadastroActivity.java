@@ -96,7 +96,7 @@ public class CadastroActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
                                         jogador.salvarJogador();
-
+                                        mostrarToast("Cadastro efetuado com sucesso");
 
 
 
